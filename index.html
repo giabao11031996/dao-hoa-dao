@@ -550,6 +550,9 @@
         if(mm.photo){
           const u=publicUrl(mm.photo)+'?v='+(meta.at||'');
           if(members[i].img!==u){members[i].img=u;members[i].cloud=mm.photo;changed=true;}
+        }else if(members[i].cloud||(members[i].img||'').indexOf(SB.url)===0){
+          // Nguoi khac da go anh nay khoi kho chung -> may nay cung phai bo theo
+          members[i].img='';members[i].cloud='';changed=true;
         }
       });
       return changed;
@@ -568,6 +571,19 @@
       clearTimeout(metaTimer);
       metaTimer=setTimeout(()=>{cloudPutMeta().catch(()=>{});},800);
     }
+    // Go anh: xoa khoi may nay VA khoi kho chung (cap nhat meta ngay, khong cho debounce)
+    function removePhoto(i){
+      members[i].img='';members[i].cloud='';
+      save();render();
+      if(!cloudOn()){setMsg(i,'Đã gỡ ảnh','ok');return;}
+      setMsg(i,'Đang gỡ khỏi kho chung…','');
+      clearTimeout(metaTimer);
+      cloudPutMeta()
+        .then(()=>setMsg(i,'Đã gỡ khỏi kho chung ✓','ok'))
+        .catch(er=>setMsg(i,'Gỡ trên máy này rồi, nhưng kho chung chưa cập nhật ('+String(er.message||er).slice(0,32)+') — thử lại',
+          'err'));
+    }
+
     function uploadToCloud(i,dataUrl){
       const name='slot-'+(i+1)+'.jpg';
       setMsg(i,'Đang tải lên kho chung…','');
@@ -701,7 +717,11 @@
         const role=document.createElement('input');role.className='role';role.type='text';role.value=m.role;role.placeholder='Vai / biệt danh';
         role.addEventListener('input',()=>{members[i].role=role.value;save();queueMeta();});
         card.appendChild(av);card.appendChild(file);card.appendChild(name);card.appendChild(role);
-        if(m.img){const rm=document.createElement('button');rm.type='button';rm.className='rm';rm.textContent='Gỡ ảnh';rm.addEventListener('click',()=>{members[i].img='';msgs[i]=null;save();render();});card.appendChild(rm);}
+        if(m.img){
+          const rm=document.createElement('button');rm.type='button';rm.className='rm';rm.textContent='Gỡ ảnh';
+          rm.addEventListener('click',()=>removePhoto(i));
+          card.appendChild(rm);
+        }
         const msg=document.createElement('div');msg.className='msg';
         if(msgs[i]){msg.textContent=msgs[i].text;msg.className='msg'+(msgs[i].kind?' '+msgs[i].kind:'');}
         card.appendChild(msg);
@@ -718,12 +738,6 @@
     }else{
       setBar('Ảnh chỉ lưu trên máy này — người khác mở link sẽ không thấy','');
     }
-
-    // Xoa anh khoi 1 o: bo luon khoi kho chung
-    grid.addEventListener('click',e=>{
-      const b=e.target.closest('.rm');
-      if(b&&cloudOn()){const i=[].indexOf.call(grid.children,b.closest('.member'));if(i>=0){members[i].cloud='';queueMeta();}}
-    });
 
     document.getElementById('exportBtn').addEventListener('click',()=>{
       document.getElementById('preset-data').textContent='window.__PRESET__='+JSON.stringify(members)+';';
