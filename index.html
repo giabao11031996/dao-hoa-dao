@@ -178,8 +178,10 @@
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
   /* ---------- ROSTER ---------- */
-  #roster{max-width:1060px}
-  .roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+  #roster{max-width:1400px}
+  .roster-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  @media(max-width:1100px){.roster-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:600px){.roster-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
   .member{position:relative;border:1px solid rgba(201,162,75,.28);border-radius:6px;padding:20px 14px;text-align:center;background:linear-gradient(160deg,rgba(236,224,200,.05),rgba(236,224,200,.01))}
   .member::before{content:"";position:absolute;inset:6px;pointer-events:none;
     background:
@@ -199,7 +201,7 @@
   .avatar .cam{position:absolute;left:0;right:0;bottom:0;background:rgba(11,14,19,.74);font-size:.58rem;padding:3px 0;color:var(--paper);letter-spacing:.04em}
   .avatar:focus-visible{outline:2px solid var(--cinnabar);outline-offset:3px}
   .member input{width:100%;border:none;background:transparent;color:var(--paper);text-align:center;font-family:var(--font);padding:5px 4px;border-bottom:1px solid var(--line)}
-  .member input.name{font-weight:800;font-size:1rem;color:var(--gold-soft);letter-spacing:.01em}
+  .member input.name{font-weight:800;font-size:.92rem;color:var(--gold-soft);letter-spacing:.01em}
   .member input.role{font-size:.74rem;color:var(--muted);letter-spacing:.05em;margin-top:2px}
   .member input::placeholder{color:rgba(154,144,117,.55)}
   .member input:focus{outline:none;border-bottom-color:var(--gold)}
