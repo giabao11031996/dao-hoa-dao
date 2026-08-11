@@ -496,7 +496,11 @@
 
     // ===== Kho anh dung chung (Supabase Storage) =====
     // Bo trong 2 dong duoi => trang chay che do cu: anh chi luu tren may nguoi xem.
-    const SB={ url:'', key:'', bucket:'bang-hoi' };
+    const SB={
+      url:'https://szmbxjelwafycacbebxo.supabase.co',
+      key:'sb_publishable_SocA6dO9jbr-Xggz8EDXog_0s4N73yX',
+      bucket:'bang-hoi'
+    };
     const cloudOn=()=>!!(SB.url&&SB.key);
     const sbHead=()=>({apikey:SB.key,Authorization:'Bearer '+SB.key});
     const publicUrl=n=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+n;
