@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đào Hoa Đảo · Chia tay đời độc thân của Siêu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Chakra+Petch:wght@600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0e13;
+    --ink2:#11151d;
+    --paper:#ece0c8;
+    --muted:#9a9075;
+    --cinnabar:#cf2f2a;
+    --cinnabar-deep:#9c1e1b;
+    --gold:#c9a24b;
+    --gold-soft:#d9be7e;
+    --peach:#e88aa4;
+    --line:rgba(236,224,200,.14);
+    --font:"Be Vietnam Pro",system-ui,sans-serif;
+    --han:"Ma Shan Zheng",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font);color:var(--paper);line-height:1.62;overflow-x:hidden;
+    background:
+      radial-gradient(1000px 520px at 82% -8%, rgba(207,47,42,.10), transparent 62%),
+      radial-gradient(760px 520px at 6% 12%, rgba(201,162,75,.08), transparent 58%),
+      linear-gradient(175deg,var(--ink) 0%, #0d1119 45%, var(--ink2) 100%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .eyebrow{
+    font-size:.72rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--gold);display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;
+  }
+  .eyebrow::before{content:"令";font-family:var(--han);font-size:1.1rem;color:var(--cinnabar);letter-spacing:0}
+
+  /* ---------- ink mountains ---------- */
+  .ink-mts{position:absolute;left:0;right:0;bottom:0;width:100%;height:190px;z-index:1;opacity:.5;pointer-events:none}
+
+  /* ---------- couplet ---------- */
+  .couplet{
+    position:absolute;top:70px;z-index:1;font-family:var(--han);color:var(--gold);
+    font-size:1.7rem;line-height:1.5;writing-mode:vertical-rl;letter-spacing:.14em;
+    opacity:.32;user-select:none;
+  }
+  .couplet.r{right:26px}
+  .couplet.l{left:26px}
+  .couplet .seal-char{color:var(--cinnabar);opacity:.8}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:76px 0 92px;text-align:center;overflow:hidden}
+  .seal{
+    width:144px;height:144px;border-radius:8px;margin:0 auto 26px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fbeee0;background:linear-gradient(160deg,#d8443c,var(--cinnabar-deep));
+    box-shadow:0 0 0 3px rgba(236,224,200,.9),0 0 0 5px var(--cinnabar-deep),0 16px 44px rgba(156,30,27,.45);
+    position:relative;animation:sealIn 1s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .seal::after{content:"";position:absolute;inset:9px;border:1px solid rgba(251,238,224,.5);border-radius:4px}
+  .seal .han{font-family:var(--han);font-size:2.5rem;line-height:1;letter-spacing:.02em}
+  .seal .rom{font-size:.56rem;font-weight:800;letter-spacing:.26em;margin-top:9px;opacity:.95}
+  @keyframes sealIn{from{opacity:0;transform:scale(.6) rotate(-12deg)}to{opacity:1;transform:none}}
+
+  .hero h1{
+    font-family:"Chakra Petch",var(--font);
+    font-weight:700;letter-spacing:.01em;line-height:1.2;padding-top:.1em;text-transform:uppercase;font-size:clamp(2.3rem,8.4vw,4.3rem);
+    background:linear-gradient(100deg,var(--paper) 28%,var(--gold-soft) 60%,var(--cinnabar) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:rise .9s ease .1s both;
+  }
+  .hero h1 .amp{
+    font-family:var(--han);font-weight:400;font-size:.44em;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;
+    width:1.5em;height:1.5em;margin:0 .12em;vertical-align:middle;transform:translateY(-.12em);
+    color:var(--cinnabar);-webkit-text-fill-color:var(--cinnabar);
+    border:2px solid var(--cinnabar);border-radius:6px;background:rgba(207,47,42,.1);
+  }
+  .hero .sub{margin:22px auto 0;max-width:560px;color:var(--muted);font-size:1.02rem;animation:rise .9s ease .25s both}
+  .meta-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px;animation:rise .9s ease .4s both}
+  .chip{
+    border:1px solid var(--line);border-radius:4px;padding:8px 15px;font-size:.8rem;font-weight:600;
+    color:var(--paper);background:rgba(236,224,200,.04);
+  }
+  .chip b{color:var(--gold-soft)}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  .petals{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .petal{position:absolute;top:-24px;width:11px;height:11px;opacity:.5;border-radius:12px 1px 12px 1px;animation:fall linear infinite}
+  @keyframes fall{0%{transform:translateY(-30px) rotate(0);opacity:0}10%{opacity:.55}100%{transform:translateY(108vh) translateX(38px) rotate(360deg);opacity:0}}
+
+  /* ---------- SECTION ---------- */
+  section{position:relative;z-index:2;padding:44px 0}
+  .sec-head{margin-bottom:26px}
+  .sec-head h2{font-size:clamp(1.5rem,5vw,2.05rem);font-weight:800;letter-spacing:-.01em}
+  .sec-head h2 .han{font-family:var(--han);color:var(--cinnabar);font-weight:400;margin-right:8px}
+  .sec-head p{color:var(--muted);margin-top:6px;max-width:600px}
+  .sec-head p b{color:var(--gold-soft)}
+
+  /* ---------- SCROLL / TIMELINE ---------- */
+  .day-title{display:flex;align-items:center;gap:16px;margin:8px 0 22px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .day-title .scroll{
+    font-family:var(--han);font-size:2.5rem;line-height:1;color:transparent;
+    background:linear-gradient(120deg,var(--gold),var(--cinnabar));-webkit-background-clip:text;background-clip:text;
+  }
+  .day-title .lbl{font-weight:800;font-size:1.08rem}
+  .day-title .lbl span{display:block;font-weight:500;font-size:.82rem;color:var(--muted)}
+
+  .tl{position:relative;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--cinnabar),var(--gold));opacity:.55}
+  .stop{position:relative;padding:0 0 22px 20px}
+  .stop::before{content:"";position:absolute;left:-25px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--ink);border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(201,162,75,.12)}
+  .stop.hot::before{border-color:var(--cinnabar);box-shadow:0 0 0 4px rgba(207,47,42,.16)}
+  .stop .time{font-size:.78rem;font-weight:800;letter-spacing:.08em;color:var(--gold)}
+  .stop.hot .time{color:var(--cinnabar)}
+  .stop h4{font-size:1.06rem;font-weight:700;margin:2px 0 3px}
+  .stop p{color:var(--muted);font-size:.92rem}
+  .stop p b{color:var(--gold-soft)}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+  .card{position:relative;border:1px solid var(--line);border-radius:6px;padding:20px;background:linear-gradient(160deg,rgba(236,224,200,.05),rgba(236,224,200,.01))}
+  .card::before{content:"";position:absolute;left:10px;top:10px;width:14px;height:14px;border-left:1px solid var(--gold);border-top:1px solid var(--gold);opacity:.5}
+  .card .role{font-family:var(--han);font-size:1rem;letter-spacing:.1em;color:var(--cinnabar)}
+  .card h4{font-size:1.1rem;font-weight:800;margin:4px 0 8px}
+  .card p{color:var(--muted);font-size:.9rem}
+
+  /* ---------- BLOCKS ---------- */
+  .blocks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .block{border:1px solid var(--line);border-radius:6px;padding:22px;background:rgba(17,21,29,.55)}
+  .block h3{font-size:1.05rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .block h3 .g{font-family:var(--han);color:var(--gold);font-weight:400}
+  .block.red h3 .g{color:var(--cinnabar)}
+  .block ul{list-style:none}
+  .block li{position:relative;padding:6px 0 6px 22px;font-size:.92rem;border-bottom:1px solid rgba(236,224,200,.06)}
+  .block li:last-child{border-bottom:none}
+  .block li::before{content:"·";position:absolute;left:6px;color:var(--cinnabar);font-weight:900;font-size:1.3em;line-height:1}
+  .block li b{color:var(--gold-soft)}
+
+  .budget{text-align:center;border:1px solid var(--line);border-radius:6px;padding:26px;background:radial-gradient(420px 200px at 50% 0%,rgba(201,162,75,.09),transparent)}
+  .budget .big{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:900;letter-spacing:-.01em;background:linear-gradient(100deg,var(--gold),var(--cinnabar));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .budget .cap{color:var(--muted);font-size:.9rem;margin-top:4px}
+  .budget .cap.hl{color:var(--gold-soft);margin-top:12px}
+
+  .warn{border-left:3px solid var(--cinnabar);border-radius:0 6px 6px 0;background:rgba(207,47,42,.08);padding:18px 20px;font-size:.93rem}
+  .warn b{color:var(--cinnabar)}
+
+  /* ---------- TABS ---------- */
+  .tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:12px 22px;margin-bottom:10px;background:rgba(11,14,19,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .tab{font-family:var(--font);font-weight:700;font-size:.88rem;color:var(--muted);cursor:pointer;border:1px solid var(--line);background:rgba(236,224,200,.03);border-radius:6px;padding:9px 16px;display:inline-flex;align-items:center;gap:7px;transition:color .2s,border-color .2s,background .2s}
+  .tab .h{font-family:var(--han);color:var(--gold);font-weight:400;font-size:1.05rem;line-height:1}
+  .tab:hover{color:var(--paper);border-color:rgba(201,162,75,.45)}
+  .tab.active{color:#fbeee0;background:linear-gradient(160deg,var(--cinnabar),var(--cinnabar-deep));border-color:var(--cinnabar)}
+  .tab.active .h{color:#fbeee0}
+  .tab:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .panel{display:none}
+  .panel.active{display:block;animation:fadeIn .35s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- ROSTER ---------- */
+  .roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+  .member{position:relative;border:1px solid rgba(201,162,75,.28);border-radius:6px;padding:20px 14px;text-align:center;background:linear-gradient(160deg,rgba(236,224,200,.05),rgba(236,224,200,.01))}
+  .member::before{content:"";position:absolute;inset:6px;pointer-events:none;
+    background:
+      linear-gradient(var(--gold),var(--gold)) left top/13px 1.6px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) left top/1.6px 13px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) right top/13px 1.6px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) right top/1.6px 13px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) left bottom/13px 1.6px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) left bottom/1.6px 13px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) right bottom/13px 1.6px no-repeat,
+      linear-gradient(var(--gold),var(--gold)) right bottom/1.6px 13px no-repeat;}
+  .member > *{position:relative;z-index:1}
+  .avatar{width:160px;height:160px;border-radius:50%;margin:0 auto 16px;position:relative;cursor:pointer;overflow:hidden;border:2.5px solid var(--gold);background:rgba(201,162,75,.08);display:flex;align-items:center;justify-content:center}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .avatar .ph{font-size:.74rem;color:var(--gold-soft);font-weight:800}
+  .avatar .cam{position:absolute;left:0;right:0;bottom:0;background:rgba(11,14,19,.74);font-size:.58rem;padding:3px 0;color:var(--paper);letter-spacing:.04em}
+  .avatar:focus-visible{outline:2px solid var(--cinnabar);outline-offset:3px}
+  .member input{width:100%;border:none;background:transparent;color:var(--paper);text-align:center;font-family:var(--font);padding:5px 4px;border-bottom:1px solid var(--line)}
+  .member input.name{font-weight:800;font-size:1rem;color:var(--gold-soft);letter-spacing:.01em}
+  .member input.role{font-size:.74rem;color:var(--muted);letter-spacing:.05em;margin-top:2px}
+  .member input::placeholder{color:rgba(154,144,117,.55)}
+  .member input:focus{outline:none;border-bottom-color:var(--gold)}
+  .member .rm{margin-top:9px;font-size:.7rem;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--font)}
+  .member .rm:hover{color:var(--cinnabar)}
+  .roster-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:24px}
+  .btn{font-family:var(--font);font-weight:800;font-size:.9rem;color:#fbeee0;cursor:pointer;border:none;border-radius:4px;padding:12px 24px;background:linear-gradient(100deg,var(--cinnabar),var(--cinnabar-deep));box-shadow:0 8px 24px rgba(156,30,27,.3)}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .roster-note{font-size:.82rem;color:var(--gold-soft)}
+
+  /* ---------- OATH ---------- */
+  .oath{position:relative;overflow:hidden;padding:28px 18px;text-align:center}
+  .oath .kbg{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-family:var(--han);font-size:min(46vw,340px);line-height:1;color:var(--cinnabar);opacity:.07;pointer-events:none;user-select:none;z-index:0}
+  .oath .inner{position:relative;z-index:1}
+  .oath .han-tag{font-family:var(--han);font-size:1.7rem;color:var(--gold);letter-spacing:.2em;margin-bottom:10px}
+  .oath h2{font-size:clamp(1.6rem,5.5vw,2.3rem);font-weight:900;letter-spacing:-.01em;margin-bottom:22px;background:linear-gradient(100deg,var(--paper),var(--gold-soft) 68%,var(--cinnabar));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .oath p{max-width:600px;margin:0 auto;color:var(--paper);font-size:1.02rem;line-height:1.76}
+  .oath p + p{margin-top:14px}
+  .oath .vow{color:var(--gold-soft);font-style:italic}
+  .oath .seal-line{margin-top:24px;font-family:var(--han);color:var(--cinnabar);font-size:1.35rem;letter-spacing:.18em}
+
+  /* ---------- FOOTER ---------- */
+  footer{text-align:center;padding:56px 0 64px;position:relative;z-index:2}
+  footer .fseal{font-family:var(--han);font-size:2rem;color:var(--cinnabar);margin-bottom:16px}
+  footer .quote{font-family:var(--han);font-size:clamp(1.5rem,6vw,2.2rem);color:var(--gold-soft);letter-spacing:.1em;line-height:1.5;margin-bottom:14px}
+  footer .quote-vi{font-style:italic;font-weight:700;font-size:clamp(1.05rem,3.6vw,1.3rem);max-width:600px;margin:0 auto 18px;line-height:1.4;color:var(--paper)}
+  footer .quote-vi span{color:var(--peach)}
+  footer .sign{color:var(--muted);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase}
+  footer .style-tag{margin-top:10px;font-size:.7rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+  footer .style-tag b{color:var(--cinnabar)}
+
+  a{color:var(--gold-soft);text-decoration:none;border-bottom:1px dotted var(--gold)}
+  a:focus-visible,.chip:focus-visible{outline:2px solid var(--cinnabar);outline-offset:3px}
+
+  @media(max-width:900px){.couplet{display:none}}
+  @media(max-width:560px){.blocks{grid-template-columns:1fr}.hero{padding:54px 0 76px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.petals{display:none}}
+</style>
+</head>
+<body>
+<script id="preset-data"></script>
+
+<header class="hero">
+  <div class="petals" id="petals" aria-hidden="true"></div>
+  <div class="couplet r" aria-hidden="true">桃花島上會群英</div>
+  <div class="couplet l" aria-hidden="true">篝火美酒餞郎君</div>
+  <div class="wrap">
+    <div class="seal" aria-label="Ấn Đào Hoa Đảo">
+      <span class="han">桃花島</span>
+      <span class="rom">ĐÀO HOA ĐẢO</span>
+    </div>
+    <span class="eyebrow">Lệnh tập kết huynh đệ · 2N1Đ</span>
+    <h1>MÃ SIÊU <span class="amp">與</span><br>bát đại huynh đệ</h1>
+    <p class="sub">Trận hạ sơn cuối cùng của đời độc thân. Đưa Mã Siêu ra đảo nâng chén luận anh hùng, quẩy một phen chấn động giang hồ, rồi hoàn trả cho tân nương — nguyên vẹn.</p>
+    <div class="meta-strip">
+      <span class="chip">📍 <b>Đào Hoa Đảo</b> · Hồ Trị An</span>
+      <span class="chip">🎯 Chủ soái: <b>Mã Siêu</b></span>
+    </div>
+  </div>
+  <svg class="ink-mts" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,200 L0,120 C120,80 200,140 320,110 C420,86 520,150 650,120 C760,96 840,150 960,118 C1060,92 1140,140 1200,120 L1200,200 Z" fill="#0a0d12"/>
+    <path d="M0,200 L0,150 C160,120 260,168 400,150 C540,132 660,175 820,152 C960,132 1080,168 1200,150 L1200,200 Z" fill="#070a0e" opacity="0.85"/>
+  </svg>
+</header>
+
+<nav class="tabs" aria-label="Mục lục">
+  <button class="tab active" type="button" data-target="banghoi"><span class="h">众</span>Bang hội</button>
+  <button class="tab" type="button" data-target="lichtrinh"><span class="h">程</span>Lịch trình</button>
+  <button class="tab" type="button" data-target="phanvai"><span class="h">职</span>Phân vai</button>
+  <button class="tab" type="button" data-target="ngansach"><span class="h">银</span>Ngân sách</button>
+  <button class="tab" type="button" data-target="hanhtrang"><span class="h">囊</span>Hành trang</button>
+</nav>
+
+<main>
+
+<!-- BANG HỘI 9 HUYNH ĐỆ -->
+<section class="wrap panel active" id="roster" data-tab="banghoi">
+  <div class="sec-head">
+    <h2><span class="han">众</span>Bang hội · 9 huynh đệ</h2>
+    <p>Hôm nay tụ nghĩa nơi Đào Hoa Đảo, tiễn đại ca Mã Siêu sang trang mới. Rượu này cạn chén — mừng huynh có bến đỗ, mừng đệ vẫn còn nhau.</p>
+  </div>
+  <div class="roster-grid" id="rosterGrid"></div>
+  <div class="roster-bar">
+    <button class="btn" id="exportBtn" type="button">💾 Xuất file kèm ảnh</button>
+  </div>
+</section>
+
+<!-- LỊCH TRÌNH -->
+<section class="wrap panel" id="tab-lichtrinh" data-tab="lichtrinh">
+  <div class="sec-head">
+    <span class="eyebrow">Hải trình</span>
+    <h2><span class="han">程</span>Lịch trình 2 ngày 1 đêm</h2>
+    <p>Bám mốc giờ cho cả bang cùng nhịp. Mốc màu son là <b>“giờ vàng”</b> — đừng để chủ soái Siêu vắng mặt.</p>
+  </div>
+
+  <div class="day-title">
+    <span class="scroll">卷一</span>
+    <span class="lbl">Ra đảo &amp; khai tiệc<span>Xuất phát → hoàng hôn → lửa trại</span></span>
+  </div>
+  <div class="tl">
+    <div class="stop reveal"><div class="time">6:30</div><h4>Tập kết &amp; xuất phát</h4><p>Điểm hẹn ở Sài Gòn — điểm danh anh em, chia xe, đổ xăng. Ai trễ phạt một chầu.</p></div>
+    <div class="stop reveal"><div class="time">8:30</div><h4>Tới bến Trị An (Mã Đà)</h4><p>Gửi xe, tập kết đồ đạc, xuống bến chờ cano.</p></div>
+    <div class="stop reveal"><div class="time">9:00</div><h4>Cano ra Đào Hoa Đảo</h4><p>Lên đảo, nhận lều/glamping, dựng trại, cắm cờ bang hội.</p></div>
+    <div class="stop reveal"><div class="time">12:00</div><h4>Ăn trưa trên đảo</h4><p>Nạp năng lượng, họp bàn kịch bản quẩy buổi tối.</p></div>
+    <div class="stop reveal"><div class="time">14:00</div><h4>Chèo SUP &amp; tắm hồ</h4><p>Team ae quẩy nước, đua SUP, chụp bộ ảnh “băng đảng”.</p></div>
+    <div class="stop hot reveal"><div class="time">17:00 · giờ vàng</div><h4>Săn hoàng hôn</h4><p>Bộ ảnh “đời trai cuối cùng” của Siêu trên nền hồ đỏ rực.</p></div>
+    <div class="stop hot reveal"><div class="time">18:30 · giờ vàng</div><h4>Khai tiệc BBQ &amp; bia</h4><p>Nổi lửa, nướng đồ, cụng ly mở màn đêm hội.</p></div>
+    <div class="stop hot reveal"><div class="time">20:00 · giờ vàng</div><h4>Phiên tòa roast chú rể</h4><p>Anh em thay nhau “kể tội” Siêu, chiếu lại phốt xưa, trao <b>Văn tự tự do cuối cùng</b>.</p></div>
+    <div class="stop reveal"><div class="time">21:30</div><h4>Lửa trại &amp; acoustic</h4><p>Hát hò, ngắm sao, kể chuyện thời còn “trẻ trâu”.</p></div>
+    <div class="stop reveal"><div class="time">23:00</div><h4>Tâm sự đêm cuối đời trai</h4><p>Cà phê/trà, anh em ngồi lại. Đêm nay không ai ngủ sớm.</p></div>
+  </div>
+
+  <div class="day-title" style="margin-top:40px">
+    <span class="scroll">卷二</span>
+    <span class="lbl">Bình minh &amp; giải nghệ<span>Dậy sớm → ảnh kỷ niệm → về thành</span></span>
+  </div>
+  <div class="tl">
+    <div class="stop reveal"><div class="time">5:30</div><h4>Săn bình minh</h4><p>Cà phê nóng, ngắm mặt hồ mờ sương. Ai dậy nổi thì dậy.</p></div>
+    <div class="stop reveal"><div class="time">7:00</div><h4>Ăn sáng</h4><p>Bún/mì nóng, hồi sức sau đêm quẩy.</p></div>
+    <div class="stop hot reveal"><div class="time">8:30 · giờ vàng</div><h4>SUP sáng &amp; ảnh kỷ niệm</h4><p>Bộ ảnh nhóm chốt hạ — tấm để đời tặng riêng Siêu.</p></div>
+    <div class="stop reveal"><div class="time">10:30</div><h4>Dọn lều, trả đồ</h4><p>Gom rác, kiểm đồ, điểm danh — không để sót ai, sót gì.</p></div>
+    <div class="stop reveal"><div class="time">11:30</div><h4>Cano về đất liền</h4><p>Chia tay đảo, hẹn ngày quay lại (lần sau dắt cả vợ).</p></div>
+    <div class="stop reveal"><div class="time">12:30</div><h4>Ăn trưa &amp; mua đặc sản</h4><p>Ghé đặc sản Trị An / Hiếu Liêm làm quà.</p></div>
+    <div class="stop hot reveal"><div class="time">14:00 · giờ vàng</div><h4>Về Sài Gòn</h4><p>Kết thúc chiến dịch. Siêu chính thức <b>giải nghệ</b> đời độc thân.</p></div>
+  </div>
+</section>
+
+<!-- PHÂN VAI -->
+<section class="wrap panel" id="tab-phanvai" data-tab="phanvai">
+  <div class="sec-head">
+    <span class="eyebrow">Bang hội phân công</span>
+    <h2><span class="han">職</span>Phân vai anh em</h2>
+    <p>Giao trước cho khỏi loạn. Riêng Siêu hôm nay chỉ có một nhiệm vụ: hưởng thụ.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><span class="role">帮主</span><h4>Bang chủ (Trưởng đoàn)</h4><p>Chốt lịch, liên hệ đảo, canh giờ cano. Đầu tàu của cả bang.</p></div>
+    <div class="card"><span class="role">庫房</span><h4>Chưởng quỹ (Thủ quỹ)</h4><p>Gom tiền, giữ quỹ chung, chia bill cuối. Đặt cọc giữ chỗ sớm.</p></div>
+    <div class="card"><span class="role">火頭</span><h4>Hỏa đầu quân (Đội BBQ)</h4><p>Lo đồ nướng, bia, đá, than, gia vị. Linh hồn của bữa tiệc.</p></div>
+    <div class="card"><span class="role">史官</span><h4>Sử quan (Nháy ảnh)</h4><p>Săn hoàng hôn/bình minh, quay clip roast làm kỷ niệm tặng Siêu.</p></div>
+    <div class="card"><span class="role">主審</span><h4>Chủ tọa (MC phiên tòa)</h4><p>Dẫn màn “kể tội chú rể”, chuẩn bị sẵn bản cáo trạng.</p></div>
+    <div class="card"><span class="role">主帥</span><h4>Chủ soái · Mã Siêu (chú rể)</h4><p>Không lo gì hết. Cười, quẩy, và để anh em lo phần còn lại.</p></div>
+  </div>
+</section>
+
+<!-- NGÂN SÁCH -->
+<section class="wrap panel" id="tab-ngansach" data-tab="ngansach">
+  <div class="sec-head">
+    <span class="eyebrow">Ngân khố</span>
+    <h2><span class="han">銀</span>Ngân sách dự trù</h2>
+  </div>
+  <div class="budget">
+    <div class="big">700k – 1.2tr <span style="font-size:.5em;font-weight:700;color:var(--muted)">/ người</span></div>
+    <div class="cap">Gồm lều/glamping · cano khứ hồi · ăn uống BBQ · bia · SUP. Tùy số lượng anh em.</div>
+    <div class="cap hl">Đào Hoa Đảo chưa niêm yết giá công khai — chưởng quỹ inbox thẳng fanpage để chốt số chính xác &amp; đặt cọc giữ chỗ (nhất là cuối tuần).</div>
+  </div>
+</section>
+
+<!-- CHECKLIST + LƯU Ý -->
+<section class="wrap panel" id="tab-hanhtrang" data-tab="hanhtrang">
+  <div class="blocks">
+    <div class="block red">
+      <h3><span class="g">囊</span>Checklist mang theo</h3>
+      <ul>
+        <li>Đồ bơi + đồ thay, khăn, dép lê</li>
+        <li>Kem chống nắng, sạc dự phòng</li>
+        <li>Loa bluetooth (linh hồn lửa trại)</li>
+        <li>Thuốc cơ bản + <b>men tiêu hóa</b> (quẩy bia nhớ có)</li>
+        <li>Túi rác — đảo sạch mình dọn sạch</li>
+        <li><b>Cáo trạng chú rể</b> in sẵn cho phiên tòa</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3><span class="g">雨</span>Lưu ý mùa mưa</h3>
+      <ul>
+        <li>Tháng 8 là mùa mưa — dễ mưa chiều tối</li>
+        <li>Mang <b>bạt / áo mưa</b> phòng thân</li>
+        <li>Bọc chống nước cho điện thoại &amp; loa</li>
+        <li>Hỏi đảo phương án khi mưa lớn (mái che/chòi)</li>
+        <li>Canh dự báo thời tiết trước 1–2 ngày</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warn" style="margin-top:16px">
+    <b>Lời dặn của bang chủ:</b> ra đảo là giữa hồ, uống có chừng mực, mặc áo phao khi lên cano/SUP. Đưa Siêu đi vui vẻ thì cũng đưa Siêu về nguyên vẹn cho cô dâu nha các huynh đệ.
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <div class="fseal" aria-hidden="true">餞</div>
+  <p class="quote">今宵桃花島 · 明日入圍城</p>
+  <p class="quote-vi">Đêm nay <span>Đào Hoa Đảo</span> là của anh em ta.<br>Mai này Siêu là của… vợ nó.</p>
+  <p class="sign">Bang hội huynh đệ · Hồ Trị An</p>
+  <p class="style-tag">Phong cách · <b>Kiếm Hiệp</b></p>
+</footer>
+
+<script>
+  // Tab lệnh bài
+  (function(){
+    const tabs=document.querySelectorAll('.tab');
+    const panels=document.querySelectorAll('.panel');
+    const nav=document.querySelector('.tabs');
+    tabs.forEach(t=>t.addEventListener('click',()=>{
+      const tgt=t.dataset.target;
+      tabs.forEach(x=>x.classList.toggle('active',x===t));
+      panels.forEach(p=>p.classList.toggle('active',p.dataset.tab===tgt));
+      if(nav)nav.scrollIntoView({behavior:'smooth',block:'start'});
+    }));
+  })();
+
+  // Cánh đào rơi
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const box=document.getElementById('petals');
+    const colors=['#e88aa4','#c9a24b','#cf2f2a'];
+    for(let i=0;i<14;i++){
+      const p=document.createElement('span');p.className='petal';
+      p.style.left=Math.random()*100+'%';
+      p.style.background=colors[i%colors.length];
+      p.style.animationDuration=(7+Math.random()*7)+'s';
+      p.style.animationDelay=(Math.random()*8)+'s';
+      p.style.transform='scale('+(.6+Math.random())+')';
+      box.appendChild(p);
+    }
+  })();
+
+  // Scroll reveal
+  (function(){
+    const items=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){items.forEach(i=>i.classList.add('in'));return;}
+    const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
+    items.forEach(i=>io.observe(i));
+  })();
+
+  // Bang hội: upload ảnh 9 huynh đệ
+  (function(){
+    const grid=document.getElementById('rosterGrid');
+    const KEY='dhd_roster_v1';
+    const DEFAULT=[
+      {name:'Mã Siêu',role:'Chủ soái · chú rể',img:''},
+      {name:'',role:'Huynh đệ',img:''},{name:'',role:'Huynh đệ',img:''},
+      {name:'',role:'Huynh đệ',img:''},{name:'',role:'Huynh đệ',img:''},
+      {name:'',role:'Huynh đệ',img:''},{name:'',role:'Huynh đệ',img:''},
+      {name:'',role:'Huynh đệ',img:''},{name:'',role:'Huynh đệ',img:''}
+    ];
+    let members=null;
+    try{const s=localStorage.getItem(KEY);if(s)members=JSON.parse(s);}catch(e){}
+    if(!members&&window.__PRESET__)members=window.__PRESET__;
+    if(!members)members=DEFAULT.map(m=>({...m}));
+    while(members.length<9)members.push({name:'',role:'Huynh đệ',img:''});
+    members=members.slice(0,9);
+
+    function save(){try{localStorage.setItem(KEY,JSON.stringify(members));}catch(e){}}
+
+    function resize(file,max,cb){
+      const r=new FileReader();
+      r.onload=()=>{
+        const img=new Image();
+        img.onload=()=>{
+          let w=img.width,h=img.height;
+          if(w>h){if(w>max){h=Math.round(h*max/w);w=max;}}
+          else{if(h>max){w=Math.round(w*max/h);h=max;}}
+          const c=document.createElement('canvas');c.width=w;c.height=h;
+          c.getContext('2d').drawImage(img,0,0,w,h);
+          cb(c.toDataURL('image/jpeg',0.82));
+        };
+        img.src=r.result;
+      };
+      r.readAsDataURL(file);
+    }
+
+    function render(){
+      grid.innerHTML='';
+      members.forEach((m,i)=>{
+        const card=document.createElement('div');card.className='member';
+        const av=document.createElement('div');av.className='avatar';av.tabIndex=0;av.setAttribute('role','button');av.setAttribute('aria-label','Gắn ảnh thành viên '+(i+1));
+        if(m.img){const im=document.createElement('img');im.src=m.img;im.alt=m.name||('Thành viên '+(i+1));av.appendChild(im);}
+        else{const ph=document.createElement('span');ph.className='ph';ph.textContent='＋ Ảnh';av.appendChild(ph);}
+        const cam=document.createElement('span');cam.className='cam';cam.textContent=m.img?'Đổi ảnh':'Tải lên';av.appendChild(cam);
+        const file=document.createElement('input');file.type='file';file.accept='image/*';file.style.display='none';
+        av.addEventListener('click',()=>file.click());
+        av.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click();}});
+        file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;resize(f,360,d=>{members[i].img=d;save();render();});});
+        const name=document.createElement('input');name.className='name';name.type='text';name.value=m.name;name.placeholder='Tên';
+        name.addEventListener('input',()=>{members[i].name=name.value;save();});
+        const role=document.createElement('input');role.className='role';role.type='text';role.value=m.role;role.placeholder='Vai / biệt danh';
+        role.addEventListener('input',()=>{members[i].role=role.value;save();});
+        card.appendChild(av);card.appendChild(file);card.appendChild(name);card.appendChild(role);
+        if(m.img){const rm=document.createElement('button');rm.type='button';rm.className='rm';rm.textContent='Gỡ ảnh';rm.addEventListener('click',()=>{members[i].img='';save();render();});card.appendChild(rm);}
+        grid.appendChild(card);
+      });
+    }
+    render();
+
+    document.getElementById('exportBtn').addEventListener('click',()=>{
+      document.getElementById('preset-data').textContent='window.__PRESET__='+JSON.stringify(members)+';';
+      const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+      const blob=new Blob([html],{type:'text/html'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lich-trinh-dao-hoa-dao-sieu.html';
+      document.body.appendChild(a);a.click();a.remove();
+    });
+  })();
+</script>
+</body>
+</html>
