@@ -178,7 +178,7 @@
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
   /* ---------- ROSTER ---------- */
-  .roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+  .roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
   .member{position:relative;border:1px solid rgba(201,162,75,.28);border-radius:6px;padding:20px 14px;text-align:center;background:linear-gradient(160deg,rgba(236,224,200,.05),rgba(236,224,200,.01))}
   .member::before{content:"";position:absolute;inset:6px;pointer-events:none;
     background:
@@ -191,7 +191,8 @@
       linear-gradient(var(--gold),var(--gold)) right bottom/13px 1.6px no-repeat,
       linear-gradient(var(--gold),var(--gold)) right bottom/1.6px 13px no-repeat;}
   .member > *{position:relative;z-index:1}
-  .avatar{width:160px;height:160px;border-radius:50%;margin:0 auto 16px;position:relative;cursor:pointer;overflow:hidden;border:2.5px solid var(--gold);background:rgba(201,162,75,.08);display:flex;align-items:center;justify-content:center}
+  .avatar{width:100%;aspect-ratio:1;border-radius:6px;margin:0 auto 16px;position:relative;cursor:pointer;overflow:hidden;border:2.5px solid var(--gold);background:rgba(201,162,75,.08);display:flex;align-items:center;justify-content:center;transition:border-color .2s}
+  .avatar:hover{border-color:var(--cinnabar)}
   .avatar img{width:100%;height:100%;object-fit:cover;display:block}
   .avatar .ph{font-size:.74rem;color:var(--gold-soft);font-weight:800}
   .avatar .cam{position:absolute;left:0;right:0;bottom:0;background:rgba(11,14,19,.74);font-size:.58rem;padding:3px 0;color:var(--paper);letter-spacing:.04em}
@@ -700,7 +701,7 @@
     function saveSafe(done){
       let res=save();
       if(res.ok)return done(res,false);
-      const steps=[[260,0.72],[190,0.6],[140,0.48]];
+      const steps=[[440,0.74],[320,0.62],[220,0.5]];
       (function attempt(k){
         if(k>=steps.length)return done(res,true);
         const mx=steps[k][0],q=steps[k][1];
@@ -730,7 +731,7 @@
         file.addEventListener('change',e=>{
           const f=e.target.files[0];if(!f)return;
           setMsg(i,'Đang xử lý ảnh…','');
-          decode(f,360,0.82,(d,err)=>{
+          decode(f,640,0.82,(d,err)=>{
             e.target.value='';
             if(!d){setMsg(i,err||'Không gắn được ảnh','err');return;}
             const prev=members[i].img;
