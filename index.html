@@ -189,6 +189,9 @@
   .member input:focus{outline:none;border-bottom-color:var(--gold)}
   .member .rm{margin-top:9px;font-size:.7rem;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--font)}
   .member .rm:hover{color:var(--cinnabar)}
+  .member .msg{margin-top:8px;font-size:.68rem;line-height:1.4;min-height:1em;color:var(--muted)}
+  .member .msg.err{color:var(--cinnabar);font-weight:700}
+  .member .msg.ok{color:var(--gold-soft)}
   .roster-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:24px}
   .btn{font-family:var(--font);font-weight:800;font-size:.9rem;color:#fbeee0;cursor:pointer;border:none;border-radius:4px;padding:12px 24px;background:linear-gradient(100deg,var(--cinnabar),var(--cinnabar-deep));box-shadow:0 8px 24px rgba(156,30,27,.3)}
   .btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -431,29 +434,92 @@
       {name:'',role:'Huynh đệ',img:''},{name:'',role:'Huynh đệ',img:''}
     ];
     let members=null;
-    try{const s=localStorage.getItem(KEY);if(s)members=JSON.parse(s);}catch(e){}
-    if(!members&&window.__PRESET__)members=window.__PRESET__;
+    try{const s=localStorage.getItem(KEY);if(s){const p=JSON.parse(s);if(Array.isArray(p))members=p;}}catch(e){}
+    // File xuat kem anh: dung anh trong file khi may nay chua gan anh nao
+    if(window.__PRESET__&&(!members||!members.some(m=>m&&m.img)))members=window.__PRESET__;
     if(!members)members=DEFAULT.map(m=>({...m}));
     while(members.length<9)members.push({name:'',role:'Huynh đệ',img:''});
     members=members.slice(0,9);
 
-    function save(){try{localStorage.setItem(KEY,JSON.stringify(members));}catch(e){}}
+    const msgs={};
+    function setMsg(i,text,kind){
+      msgs[i]=text?{text:text,kind:kind||''}:null;
+      const card=grid.children[i];
+      const el=card&&card.querySelector('.msg');
+      if(el){el.textContent=text||'';el.className='msg'+(kind?' '+kind:'');}
+    }
 
-    function resize(file,max,cb){
-      const r=new FileReader();
-      r.onload=()=>{
-        const img=new Image();
-        img.onload=()=>{
-          let w=img.width,h=img.height;
-          if(w>h){if(w>max){h=Math.round(h*max/w);w=max;}}
-          else{if(h>max){w=Math.round(w*max/h);h=max;}}
-          const c=document.createElement('canvas');c.width=w;c.height=h;
-          c.getContext('2d').drawImage(img,0,0,w,h);
-          cb(c.toDataURL('image/jpeg',0.82));
+    function save(){
+      try{localStorage.setItem(KEY,JSON.stringify(members));return {ok:true};}
+      catch(e){return {ok:false,name:(e&&e.name)||'Error'};}
+    }
+
+    // Ve anh (Image hoac ImageBitmap) ra canvas roi tra ve data URL
+    function paint(src,w,h,max,q){
+      let W=w,H=h;
+      if(W>H){if(W>max){H=Math.round(H*max/W);W=max;}}
+      else{if(H>max){W=Math.round(W*max/H);H=max;}}
+      const c=document.createElement('canvas');c.width=W;c.height=H;
+      const cx=c.getContext('2d');
+      cx.fillStyle='#11151d';cx.fillRect(0,0,W,H);   // PNG trong suot khoi thanh den
+      cx.drawImage(src,0,0,W,H);
+      return c.toDataURL('image/jpeg',q);
+    }
+
+    // Doc file anh -> cb(dataUrl, loi). Bao loi ro rang thay vi chet im.
+    function decode(file,max,q,cb){
+      if(!file)return cb(null,'Không đọc được file');
+      if(file.size>30*1024*1024)return cb(null,'Ảnh quá lớn ('+Math.round(file.size/1048576)+'MB) — chọn ảnh nhỏ hơn');
+      const heic=/heic|heif/i.test(file.name+' '+(file.type||''));
+      const viaReader=()=>{
+        const r=new FileReader();
+        r.onerror=()=>cb(null,'Không đọc được file này');
+        r.onload=()=>{
+          const img=new Image();
+          img.onerror=()=>cb(null,heic
+            ?'Ảnh iPhone (.heic) trình duyệt không đọc được — đổi sang JPG rồi tải lại'
+            :'Định dạng ảnh này không đọc được — dùng JPG hoặc PNG');
+          img.onload=()=>{try{cb(paint(img,img.width,img.height,max,q),null);}catch(e){cb(null,'Lỗi xử lý ảnh');}};
+          img.src=r.result;
         };
-        img.src=r.result;
+        r.readAsDataURL(file);
       };
-      r.readAsDataURL(file);
+      if(window.createImageBitmap&&!heic){
+        createImageBitmap(file,{imageOrientation:'from-image'}).then(bmp=>{
+          let out=null,err=null;
+          try{out=paint(bmp,bmp.width,bmp.height,max,q);}catch(e){err='Lỗi xử lý ảnh';}
+          if(bmp.close)bmp.close();
+          out?cb(out,null):(err?cb(null,err):viaReader());
+        }).catch(viaReader);
+      }else viaReader();
+    }
+
+    // Nen lai 1 anh da luu (data URL) cho nho hon
+    function shrink(dataUrl,max,q,cb){
+      const img=new Image();
+      img.onerror=()=>cb(null);
+      img.onload=()=>{try{cb(paint(img,img.width,img.height,max,q));}catch(e){cb(null);}};
+      img.src=dataUrl;
+    }
+
+    // Luu; neu localStorage day thi tu nen nho lai roi thu lai, khong im lang
+    function saveSafe(done){
+      let res=save();
+      if(res.ok)return done(res,false);
+      const steps=[[260,0.72],[190,0.6],[140,0.48]];
+      (function attempt(k){
+        if(k>=steps.length)return done(res,true);
+        const mx=steps[k][0],q=steps[k][1];
+        let pending=members.filter(m=>m.img).length;
+        if(!pending)return done(res,true);
+        members.forEach((m,i)=>{
+          if(!m.img)return;
+          shrink(m.img,mx,q,d=>{
+            if(d)members[i].img=d;
+            if(--pending===0){res=save();res.ok?done(res,true):attempt(k+1);}
+          });
+        });
+      })(0);
     }
 
     function render(){
@@ -464,16 +530,39 @@
         if(m.img){const im=document.createElement('img');im.src=m.img;im.alt=m.name||('Thành viên '+(i+1));av.appendChild(im);}
         else{const ph=document.createElement('span');ph.className='ph';ph.textContent='＋ Ảnh';av.appendChild(ph);}
         const cam=document.createElement('span');cam.className='cam';cam.textContent=m.img?'Đổi ảnh':'Tải lên';av.appendChild(cam);
-        const file=document.createElement('input');file.type='file';file.accept='image/*';file.style.display='none';
+        const file=document.createElement('input');file.type='file';file.accept='image/*,.heic,.heif';file.style.display='none';
         av.addEventListener('click',()=>file.click());
         av.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click();}});
-        file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;resize(f,360,d=>{members[i].img=d;save();render();});});
+        file.addEventListener('change',e=>{
+          const f=e.target.files[0];if(!f)return;
+          setMsg(i,'Đang xử lý ảnh…','');
+          decode(f,360,0.82,(d,err)=>{
+            e.target.value='';
+            if(!d){setMsg(i,err||'Không gắn được ảnh','err');return;}
+            const prev=members[i].img;
+            members[i].img=d;
+            saveSafe((res,shrunk)=>{
+              if(!res.ok){
+                members[i].img=prev;render();
+                setMsg(i,res.name==='QuotaExceededError'
+                  ?'Bộ nhớ trình duyệt đã đầy — gỡ vài ảnh rồi thử lại'
+                  :'Không lưu được ảnh ('+res.name+')','err');
+                return;
+              }
+              render();
+              setMsg(i,shrunk?'Đã lưu (nén nhỏ lại cho đủ bộ nhớ)':'Đã lưu ảnh ✓','ok');
+            });
+          });
+        });
         const name=document.createElement('input');name.className='name';name.type='text';name.value=m.name;name.placeholder='Tên';
         name.addEventListener('input',()=>{members[i].name=name.value;save();});
         const role=document.createElement('input');role.className='role';role.type='text';role.value=m.role;role.placeholder='Vai / biệt danh';
         role.addEventListener('input',()=>{members[i].role=role.value;save();});
         card.appendChild(av);card.appendChild(file);card.appendChild(name);card.appendChild(role);
-        if(m.img){const rm=document.createElement('button');rm.type='button';rm.className='rm';rm.textContent='Gỡ ảnh';rm.addEventListener('click',()=>{members[i].img='';save();render();});card.appendChild(rm);}
+        if(m.img){const rm=document.createElement('button');rm.type='button';rm.className='rm';rm.textContent='Gỡ ảnh';rm.addEventListener('click',()=>{members[i].img='';msgs[i]=null;save();render();});card.appendChild(rm);}
+        const msg=document.createElement('div');msg.className='msg';
+        if(msgs[i]){msg.textContent=msgs[i].text;msg.className='msg'+(msgs[i].kind?' '+msgs[i].kind:'');}
+        card.appendChild(msg);
         grid.appendChild(card);
       });
     }
