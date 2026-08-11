@@ -283,7 +283,6 @@
 <nav class="tabs" aria-label="Mục lục">
   <button class="tab active" type="button" data-target="banghoi"><span class="h">众</span>Bang hội</button>
   <button class="tab" type="button" data-target="lichtrinh"><span class="h">程</span>Lịch trình</button>
-  <button class="tab" type="button" data-target="phanvai"><span class="h">职</span>Phân vai</button>
   <button class="tab" type="button" data-target="ngansach"><span class="h">银</span>Ngân sách</button>
   <button class="tab" type="button" data-target="hanhtrang"><span class="h">囊</span>Hành trang</button>
 </nav>
@@ -343,22 +342,6 @@
   </div>
 </section>
 
-<!-- PHÂN VAI -->
-<section class="wrap panel" id="tab-phanvai" data-tab="phanvai">
-  <div class="sec-head">
-    <span class="eyebrow">Bang hội phân công</span>
-    <h2><span class="han">職</span>Phân vai anh em</h2>
-    <p>Giao trước cho khỏi loạn. Riêng Siêu hôm nay chỉ có một nhiệm vụ: hưởng thụ.</p>
-  </div>
-  <div class="grid">
-    <div class="card"><span class="role">帮主</span><h4>Bang chủ (Trưởng đoàn)</h4><p>Chốt lịch, liên hệ đảo, canh giờ cano. Đầu tàu của cả bang.</p></div>
-    <div class="card"><span class="role">庫房</span><h4>Chưởng quỹ (Thủ quỹ)</h4><p>Gom tiền, giữ quỹ chung, chia bill cuối. Đặt cọc giữ chỗ sớm.</p></div>
-    <div class="card"><span class="role">火頭</span><h4>Hỏa đầu quân (Đội BBQ)</h4><p>Lo đồ nướng, bia, đá, than, gia vị. Linh hồn của bữa tiệc.</p></div>
-    <div class="card"><span class="role">史官</span><h4>Sử quan (Nháy ảnh)</h4><p>Săn hoàng hôn/bình minh, quay clip roast làm kỷ niệm tặng Siêu.</p></div>
-    <div class="card"><span class="role">主審</span><h4>Chủ tọa (MC phiên tòa)</h4><p>Dẫn màn “kể tội chú rể”, chuẩn bị sẵn bản cáo trạng.</p></div>
-    <div class="card"><span class="role">主帥</span><h4>Chủ soái · Mã Siêu (chú rể)</h4><p>Không lo gì hết. Cười, quẩy, và để anh em lo phần còn lại.</p></div>
-  </div>
-</section>
 
 <!-- NGÂN SÁCH -->
 <section class="wrap panel" id="tab-ngansach" data-tab="ngansach">
@@ -512,6 +495,10 @@
         body:body
       }).then(r=>r.ok?r:r.text().then(t=>{throw new Error('HTTP '+r.status+' '+t.slice(0,120));}));
     }
+    function cloudDelete(name){
+      return fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+name,{method:'DELETE',headers:sbHead()})
+        .then(r=>r.ok?true:r.text().then(t=>{throw new Error('HTTP '+r.status+' '+t.slice(0,90));}));
+    }
     function cloudGetMeta(){
       return fetch(publicUrl('meta.json')+'?t='+Date.now(),{cache:'no-store'})
         .then(r=>r.ok?r.json():null).catch(()=>null);
@@ -563,25 +550,75 @@
       cloudGetMeta().then(meta=>{
         if(applyMeta(meta)){save();render();}
         setBar(meta?'Ảnh dùng chung · ai gắn ảnh thì cả bang đều thấy':'Kho chung chưa có ảnh nào — gắn ảnh đầu tiên đi sếp','ok');
+        migrateLocalToCloud(meta);   // anh/ten da co san tren may -> day len backend
       });
     }
     let metaTimer=null;
     function queueMeta(){
       if(!cloudOn())return;
       clearTimeout(metaTimer);
-      metaTimer=setTimeout(()=>{cloudPutMeta().catch(()=>{});},800);
+      setBar('Đang lưu lên kho chung…','');
+      metaTimer=setTimeout(()=>{
+        cloudPutMeta()
+          .then(()=>setBar('Đã lưu lên kho chung ✓ cả bang đều thấy','ok'))
+          .catch(()=>setBar('Chưa lưu được lên kho chung — kiểm tra mạng rồi sửa lại 1 chữ để thử lần nữa','err'));
+      },800);
+    }
+
+    // Anh/ten da co san tren may nhung kho chung chua co -> day len backend
+    let migrated=false;
+    function migrateLocalToCloud(meta){
+      if(!cloudOn()||migrated)return;
+      migrated=true;
+      const cloudMembers=(meta&&meta.members)||[];
+      const jobs=[];
+      members.forEach((m,i)=>{
+        const isLocalOnly=m.img&&m.img.indexOf('data:')===0;
+        const cloudSlotEmpty=!(cloudMembers[i]&&cloudMembers[i].photo);
+        if(isLocalOnly&&cloudSlotEmpty)jobs.push(i);       // khong ghi de anh nguoi khac
+      });
+      if(!jobs.length){
+        const textKhac=members.some((m,i)=>{
+          const c=cloudMembers[i]||{};
+          return (m.name&&m.name!==c.name)||(m.role&&m.role!==c.role);
+        });
+        if(textKhac)cloudPutMeta().catch(()=>{});
+        return;
+      }
+      setBar('Đang đưa '+jobs.length+' ảnh sẵn có trên máy lên kho chung…','');
+      let left=jobs.length;
+      jobs.forEach(i=>{
+        const name='slot-'+(i+1)+'.jpg';
+        setMsg(i,'Đang tải lên kho chung…','');
+        dataUrlToBlob(members[i].img)
+          .then(b=>cloudPut(name,b,'image/jpeg'))
+          .then(()=>{
+            members[i].cloud=name;
+            members[i].img=publicUrl(name)+'?v='+Date.now();
+            setMsg(i,'Đã lên kho chung ✓ cả bang đều thấy','ok');
+          })
+          .catch(er=>setMsg(i,'Chưa lên được kho chung ('+String(er.message||er).slice(0,28)+')','err'))
+          .then(()=>{
+            if(--left)return;
+            save();render();
+            cloudPutMeta()
+              .then(()=>setBar('Ảnh dùng chung · ai gắn ảnh thì cả bang đều thấy','ok'))
+              .catch(()=>setBar('Chưa cập nhật được kho chung — thử tải lại trang','err'));
+          });
+      });
     }
     // Go anh: xoa khoi may nay VA khoi kho chung (cap nhat meta ngay, khong cho debounce)
     function removePhoto(i){
+      const file=members[i].cloud||'';
       members[i].img='';members[i].cloud='';
       save();render();
       if(!cloudOn()){setMsg(i,'Đã gỡ ảnh','ok');return;}
       setMsg(i,'Đang gỡ khỏi kho chung…','');
       clearTimeout(metaTimer);
       cloudPutMeta()
-        .then(()=>setMsg(i,'Đã gỡ khỏi kho chung ✓','ok'))
-        .catch(er=>setMsg(i,'Gỡ trên máy này rồi, nhưng kho chung chưa cập nhật ('+String(er.message||er).slice(0,32)+') — thử lại',
-          'err'));
+        .then(()=>file?cloudDelete(file).then(()=>'xong').catch(()=>'con-file'):'xong')
+        .then(kq=>setMsg(i,kq==='xong'?'Đã xoá khỏi kho chung ✓':'Đã gỡ khỏi trang (file cũ vẫn nằm trong kho)','ok'))
+        .catch(er=>setMsg(i,'Gỡ trên máy này rồi, nhưng kho chung chưa cập nhật ('+String(er.message||er).slice(0,32)+') — thử lại','err'));
     }
 
     function uploadToCloud(i,dataUrl){
