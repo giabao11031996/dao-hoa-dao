@@ -89,6 +89,20 @@
   .chip b{color:var(--gold-soft)}
   @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
+  /* ---------- COUNTDOWN ---------- */
+  .countdown{margin:26px auto 0;max-width:520px;padding:18px 20px 16px;border:1px solid rgba(201,162,75,.3);border-radius:8px;
+    background:radial-gradient(420px 160px at 50% 0%,rgba(207,47,42,.12),transparent),rgba(17,21,29,.5);animation:rise .9s ease .35s both}
+  .cd-lbl{font-family:var(--han);font-size:1.15rem;color:var(--gold);letter-spacing:.24em;margin-bottom:6px}
+  .cd-row{display:flex;align-items:flex-start;justify-content:center;gap:6px}
+  .cd-unit{display:flex;flex-direction:column;align-items:center;min-width:60px}
+  .cd-unit b{font-family:"Chakra Petch",var(--font);font-size:clamp(1.7rem,7vw,2.5rem);font-weight:700;line-height:1;
+    font-variant-numeric:tabular-nums;background:linear-gradient(100deg,var(--paper),var(--gold-soft) 62%,var(--cinnabar));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .cd-unit i{font-style:normal;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .cd-sep{font-size:clamp(1.3rem,5vw,1.9rem);line-height:1.05;color:var(--cinnabar);opacity:.55}
+  .cd-note{margin-top:10px;font-size:.8rem;color:var(--muted)}
+  .cd-note.hot{color:var(--gold-soft);font-weight:700}
+
   .petals{position:absolute;inset:0;pointer-events:none;z-index:0}
   .petal{position:absolute;top:-24px;width:11px;height:11px;opacity:.5;border-radius:12px 1px 12px 1px;animation:fall linear infinite}
   @keyframes fall{0%{transform:translateY(-30px) rotate(0);opacity:0}10%{opacity:.55}100%{transform:translateY(108vh) translateX(38px) rotate(360deg);opacity:0}}
@@ -243,7 +257,21 @@
     <p class="sub">Trận hạ sơn cuối cùng của đời độc thân. Đưa Mã Siêu ra đảo nâng chén luận anh hùng, quẩy một phen chấn động giang hồ, rồi hoàn trả cho tân nương — nguyên vẹn.</p>
     <div class="meta-strip">
       <span class="chip">📍 <b>Đào Hoa Đảo</b> · Hồ Trị An</span>
+      <span class="chip">🗓 Khởi hành: <b>22/08</b></span>
       <span class="chip">🎯 Chủ soái: <b>Mã Siêu</b></span>
+    </div>
+    <div class="countdown" id="countdown" aria-live="polite">
+      <div class="cd-lbl">Còn</div>
+      <div class="cd-row">
+        <span class="cd-unit"><b id="cdD">–</b><i>ngày</i></span>
+        <span class="cd-sep">:</span>
+        <span class="cd-unit"><b id="cdH">–</b><i>giờ</i></span>
+        <span class="cd-sep">:</span>
+        <span class="cd-unit"><b id="cdM">–</b><i>phút</i></span>
+        <span class="cd-sep">:</span>
+        <span class="cd-unit"><b id="cdS">–</b><i>giây</i></span>
+      </div>
+      <div class="cd-note" id="cdNote">nữa là hạ sơn ra đảo</div>
     </div>
   </div>
   <svg class="ink-mts" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
@@ -271,6 +299,7 @@
   <div class="roster-grid" id="rosterGrid"></div>
   <div class="roster-bar">
     <button class="btn" id="exportBtn" type="button">💾 Xuất file kèm ảnh</button>
+    <span class="roster-note" id="rosterBar"></span>
   </div>
 </section>
 
@@ -398,6 +427,44 @@
     }));
   })();
 
+  // Đếm ngược tới ngày khởi hành 22/08 (6:30 sáng, giờ VN)
+  (function(){
+    const D=document.getElementById('cdD'),H=document.getElementById('cdH'),
+          M=document.getElementById('cdM'),S=document.getElementById('cdS'),
+          NOTE=document.getElementById('cdNote'),BOX=document.getElementById('countdown');
+    if(!D)return;
+    // Nam khoi hanh: 22/08 nam nay; neu da qua thi tinh sang nam
+    function target(){
+      const now=new Date();
+      let y=now.getFullYear();
+      let t=new Date(y,7,22,6,30,0);            // thang 7 = thang 8
+      if(now-t>36*3600*1000)t=new Date(y+1,7,22,6,30,0);
+      return t;
+    }
+    const T=target();
+    const two=n=>String(n).padStart(2,'0');
+    function tick(){
+      const diff=T-new Date();
+      if(diff<=0){
+        const done=new Date()-T>36*3600*1000;
+        D.textContent=H.textContent=M.textContent=S.textContent='0';
+        NOTE.textContent=done?'Chiến dịch đã kết thúc — Siêu chính thức giải nghệ 🍻':'ĐANG DIỄN RA — anh em đã ra đảo 🔥';
+        NOTE.className='cd-note hot';
+        return;
+      }
+      const s=Math.floor(diff/1000);
+      D.textContent=Math.floor(s/86400);
+      H.textContent=two(Math.floor(s%86400/3600));
+      M.textContent=two(Math.floor(s%3600/60));
+      S.textContent=two(s%60);
+      const d=Math.floor(s/86400);
+      NOTE.textContent=d>30?'nữa là hạ sơn ra đảo':d>7?'nữa thôi — chốt sổ đặt cọc đi các huynh đệ':d>1?'nữa là lên đường — soạn hành trang!':'nữa là tập kết, đừng để trễ mà bị phạt một chầu';
+      NOTE.className='cd-note'+(d<=7?' hot':'');
+    }
+    tick();setInterval(tick,1000);
+    BOX.setAttribute('title','Khởi hành 22/08 lúc 6:30 sáng');
+  })();
+
   // Cánh đào rơi
   (function(){
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -426,6 +493,30 @@
   (function(){
     const grid=document.getElementById('rosterGrid');
     const KEY='dhd_roster_v1';
+
+    // ===== Kho anh dung chung (Supabase Storage) =====
+    // Bo trong 2 dong duoi => trang chay che do cu: anh chi luu tren may nguoi xem.
+    const SB={ url:'', key:'', bucket:'bang-hoi' };
+    const cloudOn=()=>!!(SB.url&&SB.key);
+    const sbHead=()=>({apikey:SB.key,Authorization:'Bearer '+SB.key});
+    const publicUrl=n=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+n;
+
+    function cloudPut(name,body,type){
+      return fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+name,{
+        method:'POST',
+        headers:Object.assign({'Content-Type':type,'x-upsert':'true'},sbHead()),
+        body:body
+      }).then(r=>r.ok?r:r.text().then(t=>{throw new Error('HTTP '+r.status+' '+t.slice(0,120));}));
+    }
+    function cloudGetMeta(){
+      return fetch(publicUrl('meta.json')+'?t='+Date.now(),{cache:'no-store'})
+        .then(r=>r.ok?r.json():null).catch(()=>null);
+    }
+    function cloudPutMeta(){
+      const meta=members.map((m,i)=>({name:m.name,role:m.role,photo:m.cloud||''}));
+      return cloudPut('meta.json',JSON.stringify({v:1,at:Date.now(),members:meta}),'application/json');
+    }
+    function dataUrlToBlob(d){return fetch(d).then(r=>r.blob());}
     const DEFAULT=[
       {name:'Mã Siêu',role:'Chủ soái · chú rể',img:''},
       {name:'',role:'Huynh đệ',img:''},{name:'',role:'Huynh đệ',img:''},
@@ -440,6 +531,52 @@
     if(!members)members=DEFAULT.map(m=>({...m}));
     while(members.length<9)members.push({name:'',role:'Huynh đệ',img:''});
     members=members.slice(0,9);
+
+    const bar=document.getElementById('rosterBar');
+    function setBar(text,kind){if(bar){bar.textContent=text||'';bar.className='roster-note'+(kind?' '+kind:'');}}
+
+    // Ghep du lieu tu kho chung vao danh sach dang hien
+    function applyMeta(meta){
+      if(!meta||!Array.isArray(meta.members))return false;
+      let changed=false;
+      meta.members.forEach((mm,i)=>{
+        if(i>8||!mm)return;
+        if(mm.name!==undefined&&mm.name!==members[i].name){members[i].name=mm.name;changed=true;}
+        if(mm.role!==undefined&&mm.role!==members[i].role){members[i].role=mm.role;changed=true;}
+        if(mm.photo){
+          const u=publicUrl(mm.photo)+'?v='+(meta.at||'');
+          if(members[i].img!==u){members[i].img=u;members[i].cloud=mm.photo;changed=true;}
+        }
+      });
+      return changed;
+    }
+    function cloudSync(quiet){
+      if(!cloudOn())return;
+      if(!quiet)setBar('Đang tải ảnh của bang hội…','');
+      cloudGetMeta().then(meta=>{
+        if(applyMeta(meta)){save();render();}
+        setBar(meta?'Ảnh dùng chung · ai gắn ảnh thì cả bang đều thấy':'Kho chung chưa có ảnh nào — gắn ảnh đầu tiên đi sếp','ok');
+      });
+    }
+    let metaTimer=null;
+    function queueMeta(){
+      if(!cloudOn())return;
+      clearTimeout(metaTimer);
+      metaTimer=setTimeout(()=>{cloudPutMeta().catch(()=>{});},800);
+    }
+    function uploadToCloud(i,dataUrl){
+      const name='slot-'+(i+1)+'.jpg';
+      setMsg(i,'Đang tải lên kho chung…','');
+      dataUrlToBlob(dataUrl)
+        .then(b=>cloudPut(name,b,'image/jpeg'))
+        .then(()=>{members[i].cloud=name;return cloudPutMeta();})
+        .then(()=>{
+          members[i].img=publicUrl(name)+'?v='+Date.now();
+          save();render();
+          setMsg(i,'Đã lên kho chung ✓ cả bang đều thấy','ok');
+        })
+        .catch(er=>setMsg(i,'Đã lưu trên máy này, nhưng chưa lên kho chung ('+String(er.message||er).slice(0,40)+')','err'));
+    }
 
     const msgs={};
     function setMsg(i,text,kind){
@@ -550,14 +687,15 @@
                 return;
               }
               render();
-              setMsg(i,shrunk?'Đã lưu (nén nhỏ lại cho đủ bộ nhớ)':'Đã lưu ảnh ✓','ok');
+              if(cloudOn())uploadToCloud(i,d);
+              else setMsg(i,shrunk?'Đã lưu (nén nhỏ lại cho đủ bộ nhớ)':'Đã lưu ảnh ✓','ok');
             });
           });
         });
         const name=document.createElement('input');name.className='name';name.type='text';name.value=m.name;name.placeholder='Tên';
-        name.addEventListener('input',()=>{members[i].name=name.value;save();});
+        name.addEventListener('input',()=>{members[i].name=name.value;save();queueMeta();});
         const role=document.createElement('input');role.className='role';role.type='text';role.value=m.role;role.placeholder='Vai / biệt danh';
-        role.addEventListener('input',()=>{members[i].role=role.value;save();});
+        role.addEventListener('input',()=>{members[i].role=role.value;save();queueMeta();});
         card.appendChild(av);card.appendChild(file);card.appendChild(name);card.appendChild(role);
         if(m.img){const rm=document.createElement('button');rm.type='button';rm.className='rm';rm.textContent='Gỡ ảnh';rm.addEventListener('click',()=>{members[i].img='';msgs[i]=null;save();render();});card.appendChild(rm);}
         const msg=document.createElement('div');msg.className='msg';
@@ -567,6 +705,21 @@
       });
     }
     render();
+
+    // Kho chung: nap lan dau + tu lam moi de thay anh nguoi khac vua up
+    if(cloudOn()){
+      cloudSync(false);
+      setInterval(()=>cloudSync(true),30000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)cloudSync(true);});
+    }else{
+      setBar('Ảnh chỉ lưu trên máy này — người khác mở link sẽ không thấy','');
+    }
+
+    // Xoa anh khoi 1 o: bo luon khoi kho chung
+    grid.addEventListener('click',e=>{
+      const b=e.target.closest('.rm');
+      if(b&&cloudOn()){const i=[].indexOf.call(grid.children,b.closest('.member'));if(i>=0){members[i].cloud='';queueMeta();}}
+    });
 
     document.getElementById('exportBtn').addEventListener('click',()=>{
       document.getElementById('preset-data').textContent='window.__PRESET__='+JSON.stringify(members)+';';
