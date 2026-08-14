@@ -206,6 +206,10 @@
     cursor:pointer;background:rgba(201,162,75,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23c9a24b' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 9px center/9px 6px;
     padding-right:24px}
   .fund-row input.whoin::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer}
+  .fund-row input.whoin.all{color:#f0a4a0;background-color:rgba(207,47,42,.13);border-color:rgba(207,47,42,.4)}
+  .car input[list]{color:var(--gold-soft);cursor:pointer;padding-right:24px;
+    background:rgba(201,162,75,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23c9a24b' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 9px center/9px 6px}
+  .car input[list]::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer}
   .fund-row input.amt{width:126px}
   .del{flex-shrink:0;width:26px;height:26px;border-radius:4px;cursor:pointer;line-height:1;font-size:1rem;
     border:1px solid var(--line);background:transparent;color:var(--muted);font-family:var(--font)}
@@ -231,6 +235,27 @@
     .fund-row.chi input.whoin{flex:1;width:auto}
     .fund-row.chi input.amt{flex:1;width:auto;margin-left:28px}
   }
+  /* ---------- XE DI CHUNG ---------- */
+  .cars{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:700px){.cars{grid-template-columns:1fr}}
+  .car{border:1px solid var(--line);border-radius:6px;padding:16px;background:rgba(17,21,29,.55)}
+  .car-head{display:flex;align-items:center;gap:10px;padding-bottom:11px;margin-bottom:11px;border-bottom:1px solid var(--line)}
+  .car-head .g{font-family:var(--han);color:var(--gold);font-size:1.2rem;line-height:1;flex-shrink:0}
+  .car input{background:rgba(236,224,200,.04);border:1px solid var(--line);border-radius:4px;color:var(--paper);
+    font-family:var(--font);padding:7px 10px;min-width:0}
+  .car input:focus{outline:none;border-color:var(--gold);background:rgba(201,162,75,.08)}
+  .car input.car-name{flex:1;font-weight:800;font-size:.98rem;color:var(--gold-soft)}
+  .car .lbl{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+    width:52px;flex-shrink:0}
+  .car-line{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+  .car-line input{flex:1}
+  .car-mem-h{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:13px 0 7px}
+  .car-empty{font-size:.85rem;color:var(--muted);padding:2px 0 8px}
+  .car .btn-mini{margin-top:4px;font-family:var(--font);font-weight:700;font-size:.78rem;color:var(--gold-soft);cursor:pointer;
+    border:1px dashed rgba(201,162,75,.45);background:transparent;border-radius:4px;padding:7px 12px}
+  .car .btn-mini:hover{color:#fbeee0;border-color:var(--gold);background:rgba(201,162,75,.12)}
+  .car .del{margin-left:auto}
+
   .fund-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
   @media(max-width:560px){.fund-stats{grid-template-columns:1fr}}
   .fstat{border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;background:rgba(17,21,29,.5)}
@@ -405,6 +430,7 @@
 <nav class="tabs" aria-label="Mục lục">
   <button class="tab active" type="button" data-target="banghoi"><span class="h">众</span>Bang hội</button>
   <button class="tab" type="button" data-target="lichtrinh"><span class="h">程</span>Lịch trình</button>
+  <button class="tab" type="button" data-target="dichung"><span class="h">車</span>Đi chung</button>
   <button class="tab" type="button" data-target="thucdon"><span class="h">宴</span>Thực đơn</button>
   <button class="tab" type="button" data-target="ngansach"><span class="h">银</span>Ngân sách</button>
   <button class="tab" type="button" data-target="hanhtrang"><span class="h">囊</span>Hành trang</button>
@@ -465,6 +491,30 @@
   </div>
 </section>
 
+
+<!-- ĐI CHUNG -->
+<section class="wrap panel" id="tab-dichung" data-tab="dichung">
+  <div class="sec-head">
+    <span class="eyebrow">Phân xe</span>
+    <h2><span class="han">車</span>Sắp cặp đi chung</h2>
+    <p>Ai đi xe nào, ngồi với ai — <b>ai cũng tự thêm xe và ghi tên mình vào</b>, cả bang cùng thấy để khỏi ai bị bỏ lại bến.</p>
+  </div>
+
+  <div class="cars" id="carList"></div>
+  <button class="btn-sm" id="carAdd" type="button">＋ Thêm xe</button>
+
+  <div class="fund-stats">
+    <div class="fstat"><b id="carNum">0</b><span>Số xe</span></div>
+    <div class="fstat"><b id="carSeated">0</b><span>Đã có xe</span></div>
+    <div class="fstat"><b id="carLeft">9</b><span>Chưa xếp xe</span></div>
+  </div>
+  <div class="fund-bar">
+    <span class="st" id="carSt">Thêm xe hoặc ghi tên là cả bang cùng thấy</span>
+  </div>
+  <div class="warn" id="carWarn" style="margin-top:16px;display:none">
+    <b>Chưa có xe:</b> <span id="carMissing"></span>
+  </div>
+</section>
 
 <!-- THỰC ĐƠN -->
 <section class="wrap panel" id="tab-thucdon" data-tab="thucdon">
@@ -702,8 +752,10 @@
   <p class="style-tag">Phong cách · <b>Kiếm Hiệp</b></p>
 </footer>
 
-<!-- goi y ten 9 huynh de, dung chung cho bang tien chi + hanh trang -->
+<!-- goi y ten 9 huynh de, dung chung cho bang tien chi + xe -->
 <datalist id="dsBangHoi"></datalist>
+<!-- rieng bang hanh trang: co them lua chon "Tat ca huynh de" -->
+<datalist id="dsMua"></datalist>
 
 <script>
   // Ten 9 huynh de lay tu tab Bang hoi (dung chung cho bang tien chi + so quy)
@@ -717,14 +769,16 @@
   }
 
   // Do 9 ten vao o goi y (go de loc) - dung chung cho bang tien chi + hanh trang
+  const CA_BANG='Tất cả huynh đệ';
   function fillNames(){
-    const dl=document.getElementById('dsBangHoi');
-    if(!dl)return;
     const ns=bangHoiNames().map(m=>m.name);
-    if(dl.dataset.now===ns.join('|'))return;
-    dl.dataset.now=ns.join('|');
-    dl.innerHTML='';
-    ns.forEach(n=>{const o=document.createElement('option');o.value=n;dl.appendChild(o);});
+    [['dsBangHoi',ns],['dsMua',[CA_BANG].concat(ns)]].forEach(([id,opts])=>{
+      const dl=document.getElementById(id);
+      if(!dl||dl.dataset.now===opts.join('|'))return;
+      dl.dataset.now=opts.join('|');
+      dl.innerHTML='';
+      opts.forEach(n=>{const o=document.createElement('option');o.value=n;dl.appendChild(o);});
+    });
   }
 
   // Tab lệnh bài
@@ -811,6 +865,160 @@
     }));
   })();
 
+  // Di chung: sap xe - ai di voi ai, ai cung them, ai cung thay
+  (function(){
+    const list=document.getElementById('carList');
+    if(!list)return;
+    const KEY='dhd_xe_v1';
+    const SB={
+      url:'https://szmbxjelwafycacbebxo.supabase.co',
+      key:'sb_publishable_SocA6dO9jbr-Xggz8EDXog_0s4N73yX',
+      bucket:'bang-hoi',
+      file:'xe.json'
+    };
+    const SEED=[{name:'Xe 1',driver:'',members:['']}];
+    const cloudOn=()=>!!(SB.url&&SB.key);
+    const pubUrl=()=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+SB.file;
+    const el={num:document.getElementById('carNum'),seated:document.getElementById('carSeated'),
+              left:document.getElementById('carLeft'),st:document.getElementById('carSt'),
+              warn:document.getElementById('carWarn'),miss:document.getElementById('carMissing')};
+
+    let cars=null;
+    try{const s=localStorage.getItem(KEY);if(s){const p=JSON.parse(s);if(Array.isArray(p))cars=p;}}catch(e){}
+    if(!cars)cars=SEED.map(x=>({...x,members:x.members.slice()}));
+    let lastLocal=0,pushing=false,timer=null,seeded=false;
+
+    function setSt(t,k){el.st.textContent=t||'';el.st.className='st'+(k?' '+k:'');}
+    function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(cars));}catch(e){}}
+    function norm(s){return (s||'').trim().toLowerCase();}
+    function stats(){
+      const seated=new Set();
+      cars.forEach(c=>{
+        if(norm(c.driver))seated.add(norm(c.driver));
+        (c.members||[]).forEach(m=>{if(norm(m))seated.add(norm(m));});
+      });
+      const all=bangHoiNames().map(m=>m.name);
+      const missing=all.filter(n=>!seated.has(norm(n)));
+      el.num.textContent=cars.length;
+      el.seated.textContent=seated.size;
+      el.left.textContent=missing.length;
+      if(missing.length){el.warn.style.display='';el.miss.textContent=missing.join(' · ');}
+      else{el.warn.style.display='none';}
+    }
+    function mkName(val,ph,onInput){
+      const i=document.createElement('input');i.type='text';i.className='whoin-car';
+      i.setAttribute('list','dsBangHoi');i.autocomplete='off';
+      i.placeholder=ph;i.value=val||'';i.setAttribute('aria-label',ph);
+      i.addEventListener('input',()=>{onInput(i.value);touch();stats();});
+      i.addEventListener('focus',()=>{fillNames();i.select();});
+      return i;
+    }
+    function render(){
+      list.innerHTML='';
+      cars.forEach((c,ci)=>{
+        const box=document.createElement('div');box.className='car';
+
+        const head=document.createElement('div');head.className='car-head';
+        const g=document.createElement('span');g.className='g';g.textContent='車';
+        const nm=document.createElement('input');nm.className='car-name';nm.type='text';
+        nm.placeholder='Tên xe / biển số';nm.value=c.name||'';nm.setAttribute('aria-label','Tên xe');
+        nm.addEventListener('input',()=>{cars[ci].name=nm.value;touch();});
+        const del=document.createElement('button');del.className='del';del.type='button';
+        del.textContent='×';del.title='Xoá xe này';del.setAttribute('aria-label','Xoá xe');
+        del.addEventListener('click',()=>{
+          if(!confirm('Xoá "'+((c.name||'').trim()||('Xe '+(ci+1)))+'"? Cả bang sẽ mất xe này.'))return;
+          cars.splice(ci,1);touch();render();
+        });
+        head.appendChild(g);head.appendChild(nm);head.appendChild(del);
+
+        const dl=document.createElement('div');dl.className='car-line';
+        const lb=document.createElement('span');lb.className='lbl';lb.textContent='Tài xế';
+        dl.appendChild(lb);
+        dl.appendChild(mkName(c.driver,'Chọn huynh đệ',v=>{cars[ci].driver=v;}));
+
+        const mh=document.createElement('div');mh.className='car-mem-h';mh.textContent='Đi cùng';
+
+        box.appendChild(head);box.appendChild(dl);box.appendChild(mh);
+
+        const mems=c.members||[];
+        if(!mems.length){
+          const e=document.createElement('div');e.className='car-empty';e.textContent='Chưa có ai — bấm thêm người bên dưới.';
+          box.appendChild(e);
+        }
+        mems.forEach((m,mi)=>{
+          const line=document.createElement('div');line.className='car-line';
+          line.appendChild(mkName(m,'Chọn huynh đệ',v=>{cars[ci].members[mi]=v;}));
+          const x=document.createElement('button');x.className='del';x.type='button';x.textContent='×';
+          x.title='Bỏ người này';x.setAttribute('aria-label','Bỏ người khỏi xe');
+          x.addEventListener('click',()=>{cars[ci].members.splice(mi,1);touch();render();});
+          line.appendChild(x);
+          box.appendChild(line);
+        });
+
+        const add=document.createElement('button');add.className='btn-mini';add.type='button';add.textContent='＋ Thêm người';
+        add.addEventListener('click',()=>{
+          cars[ci].members=(cars[ci].members||[]).concat('');
+          touch();render();
+          const ins=list.children[ci].querySelectorAll('.car-line input');
+          if(ins.length)ins[ins.length-1].focus();
+        });
+        box.appendChild(add);
+        list.appendChild(box);
+      });
+      stats();
+    }
+    function touch(){lastLocal=Date.now();saveLocal();queuePush();}
+    function queuePush(){
+      if(!cloudOn()){setSt('Đã lưu trên máy này (chưa nối kho chung)','ok');return;}
+      clearTimeout(timer);setSt('Đang lưu lên kho chung…','');
+      timer=setTimeout(push,800);
+    }
+    function push(){
+      pushing=true;
+      fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+SB.file,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-upsert':'true',apikey:SB.key,Authorization:'Bearer '+SB.key},
+        body:JSON.stringify({v:1,at:Date.now(),items:cars})
+      })
+      .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);setSt('Đã lưu ✓ cả bang đều thấy','ok');})
+      .catch(()=>setSt('Chưa lưu được lên kho chung — kiểm tra mạng rồi sửa lại','err'))
+      .then(()=>{pushing=false;});
+    }
+    function pull(quiet){
+      if(!cloudOn()||pushing)return;
+      if(Date.now()-lastLocal<5000)return;                  // vua go xong thi khoan ghi de
+      fetch(pubUrl()+'?t='+Date.now(),{cache:'no-store'})
+        .then(r=>r.ok?r.json():null)
+        .then(d=>{
+          if(!d||!Array.isArray(d.items)){
+            if(!seeded){seeded=true;push();}
+            return;
+          }
+          seeded=true;
+          if(JSON.stringify(d.items)!==JSON.stringify(cars)){
+            cars=d.items;saveLocal();
+            if(!document.activeElement||!list.contains(document.activeElement))render();
+            else stats();
+          }
+          if(!quiet)setSt('Bảng xe dùng chung · ai xếp thì cả bang đều thấy','ok');
+        })
+        .catch(()=>{if(!quiet)setSt('Chưa tải được bảng xe chung — đang xem bản lưu trên máy','err');});
+    }
+
+    document.getElementById('carAdd').addEventListener('click',()=>{
+      cars.push({name:'Xe '+(cars.length+1),driver:'',members:['']});
+      touch();render();
+    });
+
+    fillNames();render();
+    if(cloudOn()){
+      pull(false);
+      setInterval(()=>pull(true),20000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden){pull(true);fillNames();}});
+    }else setSt('Chỉ lưu trên máy này','');
+    document.querySelector('.tab[data-target="dichung"]').addEventListener('click',()=>{fillNames();stats();});
+  })();
+
   // Hanh trang: vat dung can mua - ai cung them, ai cung tick, ai cung thay
   (function(){
     const list=document.getElementById('dungList');
@@ -866,9 +1074,14 @@
         name.addEventListener('input',()=>{items[i].name=name.value;touch();});
 
         const who=document.createElement('input');who.className='whoin';who.type='text';
-        who.setAttribute('list','dsBangHoi');who.autocomplete='off';
+        who.setAttribute('list','dsMua');who.autocomplete='off';
         who.placeholder='Chọn huynh đệ';who.value=it.who||'';who.setAttribute('aria-label','Huynh đệ mua món này');
-        who.addEventListener('input',()=>{items[i].who=who.value;touch();});
+        if((it.who||'').trim()===CA_BANG)who.classList.add('all');
+        who.addEventListener('input',()=>{
+          items[i].who=who.value;
+          who.classList.toggle('all',who.value.trim()===CA_BANG);
+          touch();
+        });
         who.addEventListener('focus',()=>{fillNames();who.select();});
 
         const box=document.createElement('label');box.className='tickbox';box.title='Đánh dấu đã mua';
