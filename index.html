@@ -199,10 +199,10 @@
   @media(max-width:520px){.fund-row{gap:8px;padding:10px 12px}.fund-row input{width:106px;font-size:.88rem}.fund-row .who{font-size:.88rem}}
   /* bang tien chi: noi dung / ai chi / so tien */
   .fund-row .txt-h{flex:1;min-width:0}
-  .fund-row .who-h{width:116px;flex-shrink:0}
+  .fund-row .who-h{width:186px;flex-shrink:0}
   .fund-row .amt-h{width:126px;flex-shrink:0;text-align:right}
   .fund-row input.txt{flex:1;min-width:0;width:auto;text-align:left;font-family:var(--font);font-weight:600;font-size:.92rem}
-  .fund-row input.whoin{width:116px;text-align:left;font-family:var(--font);font-weight:600;font-size:.88rem;color:var(--gold-soft);
+  .fund-row input.whoin{width:186px;text-align:left;font-family:var(--font);font-weight:600;font-size:.9rem;color:var(--gold-soft);
     cursor:pointer;background:rgba(201,162,75,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23c9a24b' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 9px center/9px 6px;
     padding-right:24px}
   .fund-row input.whoin::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer}
@@ -595,7 +595,7 @@
       <div class="fund-row head chi">
         <span class="idx">#</span>
         <span class="txt-h">Nội dung chi</span>
-        <span class="who-h">Ai chi</span>
+        <span class="who-h">Huynh đệ</span>
         <span class="amt-h">Số tiền (đ)</span>
         <span style="width:26px;flex-shrink:0"></span>
       </div>
@@ -837,7 +837,7 @@
 
         const who=document.createElement('input');who.className='whoin';who.type='text';
         who.setAttribute('list','dsBangHoi');who.autocomplete='off';
-        who.placeholder='Chọn huynh đệ';who.value=it.who||'';who.setAttribute('aria-label','Ai chi');
+        who.placeholder='Chọn huynh đệ';who.value=it.who||'';who.setAttribute('aria-label','Huynh đệ chi khoản này');
         who.addEventListener('input',()=>{items[i].who=who.value;touch();});
         who.addEventListener('focus',()=>{fillNames();who.select();});
 
