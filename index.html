@@ -197,6 +197,28 @@
   .fund-row input:focus{outline:none;border-color:var(--gold);background:rgba(201,162,75,.08)}
   .fund-row .dong{font-size:.78rem;color:var(--muted);flex-shrink:0;width:12px}
   @media(max-width:520px){.fund-row{gap:8px;padding:10px 12px}.fund-row input{width:106px;font-size:.88rem}.fund-row .who{font-size:.88rem}}
+  /* bang tien chi: noi dung / ai chi / so tien */
+  .fund-row .txt-h{flex:1;min-width:0}
+  .fund-row .who-h{width:116px;flex-shrink:0}
+  .fund-row .amt-h{width:126px;flex-shrink:0;text-align:right}
+  .fund-row input.txt{flex:1;min-width:0;width:auto;text-align:left;font-family:var(--font);font-weight:600;font-size:.92rem}
+  .fund-row input.whoin{width:116px;text-align:left;font-family:var(--font);font-weight:600;font-size:.88rem;color:var(--gold-soft)}
+  .fund-row input.amt{width:126px}
+  .del{flex-shrink:0;width:26px;height:26px;border-radius:4px;cursor:pointer;line-height:1;font-size:1rem;
+    border:1px solid var(--line);background:transparent;color:var(--muted);font-family:var(--font)}
+  .del:hover{color:var(--cinnabar);border-color:rgba(207,47,42,.5);background:rgba(207,47,42,.08)}
+  .btn-sm{margin-top:14px;font-family:var(--font);font-weight:800;font-size:.84rem;color:var(--gold-soft);cursor:pointer;
+    border:1px dashed rgba(201,162,75,.5);background:rgba(201,162,75,.06);border-radius:5px;padding:10px 18px}
+  .btn-sm:hover{color:#fbeee0;border-color:var(--gold);background:rgba(201,162,75,.14)}
+  .btn-sm:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .fund-empty{padding:22px 16px;text-align:center;color:var(--muted);font-size:.88rem}
+  @media(max-width:640px){
+    .fund-row.head.chi{display:none}
+    .fund-row.chi{flex-wrap:wrap;row-gap:8px}
+    .fund-row.chi input.txt{flex:1 0 calc(100% - 46px)}
+    .fund-row.chi input.whoin{flex:1;width:auto}
+    .fund-row.chi input.amt{flex:1;width:auto;margin-left:28px}
+  }
   .fund-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
   @media(max-width:560px){.fund-stats{grid-template-columns:1fr}}
   .fstat{border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;background:rgba(17,21,29,.5)}
@@ -561,17 +583,32 @@
   </div>
 
   <div class="subtabs" role="tablist">
-    <button class="subtab active" type="button" data-sub="dutru"><span class="h">算</span>Dự trù chi phí</button>
+    <button class="subtab active" type="button" data-sub="tienchi"><span class="h">支</span>Tiền chi</button>
     <button class="subtab" type="button" data-sub="donggop"><span class="h">捐</span>Đóng góp huynh đệ</button>
   </div>
 
-  <div class="subpanel active" data-sub="dutru">
-  <div class="budget">
-    <div class="big">700k – 1.2tr <span style="font-size:.5em;font-weight:700;color:var(--muted)">/ người</span></div>
-    <div class="cap">Gồm lều/glamping · cano khứ hồi · ăn uống BBQ · bia · SUP. Tùy số lượng anh em.</div>
-    <div class="paid"><span class="ok">✓</span><span>Ngân khố đã xuất <b>500.000đ</b> đặt cọc giữ chỗ đảo — chỗ đã chắc, khoản này trừ vào tổng khi quyết toán.</span></div>
-    <div class="cap hl" style="margin-top:14px">Đào Hoa Đảo chưa niêm yết giá công khai — chưởng quỹ inbox thẳng fanpage chốt con số cuối cho <b>phần còn lại</b>, rồi chia đầu người.</div>
-  </div>
+  <div class="subpanel active" data-sub="tienchi">
+    <div class="fund" id="chiList">
+      <div class="fund-row head chi">
+        <span class="idx">#</span>
+        <span class="txt-h">Nội dung chi</span>
+        <span class="who-h">Ai chi</span>
+        <span class="amt-h">Số tiền (đ)</span>
+        <span style="width:26px;flex-shrink:0"></span>
+      </div>
+    </div>
+    <button class="btn-sm" id="chiAdd" type="button">＋ Thêm khoản chi</button>
+    <div class="fund-stats">
+      <div class="fstat"><b id="chiTotal">0đ</b><span>Tổng đã chi</span></div>
+      <div class="fstat"><b id="chiNum">0</b><span>Số khoản chi</span></div>
+      <div class="fstat"><b id="chiHead">0đ</b><span>Bình quân / 9 người</span></div>
+    </div>
+    <div class="fund-bar">
+      <span class="st" id="chiSt">Ai cũng ghi được — gõ xong là cả bang cùng thấy</span>
+    </div>
+    <div class="budget" style="margin-top:16px;text-align:left;padding:20px">
+      <div class="cap"><b style="color:var(--gold-soft)">Dự trù ban đầu 700k – 1.2tr/người</b> — gồm lều/glamping · cano khứ hồi · ăn uống BBQ · bia · SUP. Đảo chưa niêm yết giá công khai, chưởng quỹ inbox fanpage chốt con số cuối rồi ghi vào bảng trên.</div>
+    </div>
   </div>
 
   <div class="subpanel" data-sub="donggop">
@@ -585,7 +622,7 @@
     </div>
     <div class="fund-stats">
       <div class="fstat"><b id="fundTotal">0đ</b><span>Tổng đã thu</span></div>
-      <div class="fstat"><b id="fundSpent">500.000đ</b><span>Đã chi · cọc đảo</span></div>
+      <div class="fstat"><b id="fundSpent">0đ</b><span>Tổng đã chi</span></div>
       <div class="fstat"><b id="fundLeft">0đ</b><span>Quỹ còn lại</span></div>
     </div>
     <div class="fund-bar">
@@ -723,11 +760,139 @@
     }));
   })();
 
+  // So tien chi: noi dung / ai chi / bao nhieu - ai cung ghi va xem duoc
+  (function(){
+    const list=document.getElementById('chiList');
+    if(!list)return;
+    const KEY='dhd_chi_v1';
+    const SB={
+      url:'https://szmbxjelwafycacbebxo.supabase.co',
+      key:'sb_publishable_SocA6dO9jbr-Xggz8EDXog_0s4N73yX',
+      bucket:'bang-hoi',
+      file:'chi.json'
+    };
+    const SEED=[{note:'Cọc giữ chỗ đảo',who:'',amt:500000}];
+    const cloudOn=()=>!!(SB.url&&SB.key);
+    const pubUrl=()=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+SB.file;
+    const nf=new Intl.NumberFormat('vi-VN');
+    const money=n=>nf.format(Math.round(n||0))+'đ';
+    const el={total:document.getElementById('chiTotal'),num:document.getElementById('chiNum'),
+              head:document.getElementById('chiHead'),st:document.getElementById('chiSt')};
+
+    let items=null;
+    try{const s=localStorage.getItem(KEY);if(s){const p=JSON.parse(s);if(Array.isArray(p))items=p;}}catch(e){}
+    if(!items)items=SEED.map(x=>({...x}));
+    let lastLocal=0,pushing=false,timer=null,seeded=false;
+
+    function setSt(t,k){el.st.textContent=t||'';el.st.className='st'+(k?' '+k:'');}
+    function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(items));}catch(e){}}
+    function total(){return items.reduce((s,x)=>s+(+x.amt||0),0);}
+    function stats(){
+      const t=total();
+      el.total.textContent=money(t);
+      el.num.textContent=items.length;
+      el.head.textContent=money(t/9);
+      // bao cho tab "Dong gop" biet de tinh quy con lai
+      window.__CHI_TOTAL__=t;
+      document.dispatchEvent(new CustomEvent('chi:changed',{detail:t}));
+    }
+    function render(){
+      list.querySelectorAll('.fund-row:not(.head), .fund-empty').forEach(r=>r.remove());
+      if(!items.length){
+        const e=document.createElement('div');e.className='fund-empty';
+        e.textContent='Chưa có khoản chi nào — bấm “Thêm khoản chi” để ghi sổ.';
+        list.appendChild(e);stats();return;
+      }
+      items.forEach((it,i)=>{
+        const row=document.createElement('div');row.className='fund-row chi';
+        const idx=document.createElement('span');idx.className='idx';idx.textContent=i+1;
+
+        const note=document.createElement('input');note.className='txt';note.type='text';
+        note.placeholder='Chi cho việc gì…';note.value=it.note||'';note.setAttribute('aria-label','Nội dung chi');
+        note.addEventListener('input',()=>{items[i].note=note.value;touch();});
+
+        const who=document.createElement('input');who.className='whoin';who.type='text';
+        who.placeholder='Ai chi';who.value=it.who||'';who.setAttribute('aria-label','Ai chi');
+        who.addEventListener('input',()=>{items[i].who=who.value;touch();});
+
+        const amt=document.createElement('input');amt.className='amt';amt.type='text';amt.inputMode='numeric';
+        amt.placeholder='0';amt.value=(+it.amt)?nf.format(+it.amt):'';amt.setAttribute('aria-label','Số tiền');
+        amt.addEventListener('input',()=>{
+          const d=amt.value.replace(/\D/g,'');
+          amt.value=d?nf.format(+d):'';
+          items[i].amt=+d||0;touch();stats();
+        });
+
+        const del=document.createElement('button');del.className='del';del.type='button';
+        del.textContent='×';del.title='Xoá khoản này';del.setAttribute('aria-label','Xoá khoản chi');
+        del.addEventListener('click',()=>{
+          const co=(items[i].note||'').trim()||(+items[i].amt||0);
+          if(co&&!confirm('Xoá khoản “'+((items[i].note||'').trim()||money(items[i].amt))+'”? Cả bang sẽ mất dòng này.'))return;
+          items.splice(i,1);touch();render();
+        });
+
+        row.appendChild(idx);row.appendChild(note);row.appendChild(who);row.appendChild(amt);row.appendChild(del);
+        list.appendChild(row);
+      });
+      stats();
+    }
+    function touch(){lastLocal=Date.now();saveLocal();queuePush();}
+    function queuePush(){
+      if(!cloudOn()){setSt('Đã lưu trên máy này (chưa nối kho chung)','ok');return;}
+      clearTimeout(timer);setSt('Đang lưu lên kho chung…','');
+      timer=setTimeout(push,800);
+    }
+    function push(){
+      pushing=true;
+      fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+SB.file,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-upsert':'true',apikey:SB.key,Authorization:'Bearer '+SB.key},
+        body:JSON.stringify({v:1,at:Date.now(),items:items})
+      })
+      .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);setSt('Đã lưu ✓ cả bang đều thấy','ok');})
+      .catch(()=>setSt('Chưa lưu được lên kho chung — kiểm tra mạng rồi sửa lại','err'))
+      .then(()=>{pushing=false;});
+    }
+    function pull(quiet){
+      if(!cloudOn()||pushing)return;
+      if(Date.now()-lastLocal<5000)return;                  // vua go xong thi khoan ghi de
+      fetch(pubUrl()+'?t='+Date.now(),{cache:'no-store'})
+        .then(r=>r.ok?r.json():null)
+        .then(d=>{
+          if(!d||!Array.isArray(d.items)){
+            if(!seeded){seeded=true;push();}                // kho chung chua co -> day ban dau len
+            return;
+          }
+          seeded=true;
+          if(JSON.stringify(d.items)!==JSON.stringify(items)){
+            items=d.items;saveLocal();
+            if(!document.activeElement||!list.contains(document.activeElement))render();
+            else stats();
+          }
+          if(!quiet)setSt('Sổ chi dùng chung · ai ghi thì cả bang đều thấy','ok');
+        })
+        .catch(()=>{if(!quiet)setSt('Chưa tải được sổ chi chung — đang xem bản lưu trên máy','err');});
+    }
+
+    document.getElementById('chiAdd').addEventListener('click',()=>{
+      items.push({note:'',who:'',amt:0});touch();render();
+      const ins=list.querySelectorAll('.fund-row.chi input.txt');
+      if(ins.length)ins[ins.length-1].focus();
+    });
+
+    render();
+    if(cloudOn()){
+      pull(false);
+      setInterval(()=>pull(true),20000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull(true);});
+    }else setSt('Chỉ lưu trên máy này','');
+  })();
+
   // Quy bang: so tien tung huynh de dong - dung chung ca bang
   (function(){
     const list=document.getElementById('fundList');
     if(!list)return;
-    const DEPOSIT=500000;                       // da coc dao
+    const spent=()=>+window.__CHI_TOTAL__||0;   // tong tien chi lay tu tab "Tien chi"
     const HAN=['一','二','三','四','五','六','七','八','九'];
     const KEY='dhd_fund_v1';
     const SB={
@@ -761,8 +926,8 @@
       let total=0,n=0;
       for(let i=0;i<9;i++){const v=+state[i]||0;if(v>0){total+=v;n++;}}
       el.total.textContent=money(total);
-      el.spent.textContent=money(DEPOSIT);
-      el.left.textContent=money(total-DEPOSIT);
+      el.spent.textContent=money(spent());
+      el.left.textContent=money(total-spent());
       el.count.textContent=n?('Đã có '+n+'/9 huynh đệ đóng'):'Chưa ai đóng';
       rows.forEach((r,i)=>r.classList.toggle('paid-in',(+state[i]||0)>0));
     }
@@ -831,6 +996,8 @@
       setInterval(()=>pull(true),20000);
       document.addEventListener('visibilitychange',()=>{if(!document.hidden){pull(true);render();}});
     }else setSt('Chỉ lưu trên máy này','');
+    // tab "Tien chi" doi so -> o "Tong da chi" + "Quy con lai" cap nhat theo
+    document.addEventListener('chi:changed',stats);
     // ten doi ben tab Bang hoi -> bang quy cap nhat theo
     document.querySelector('.tab[data-target="ngansach"]').addEventListener('click',()=>{
       if(!document.activeElement||!list.contains(document.activeElement))render();
