@@ -162,8 +162,91 @@
   .budget .cap{color:var(--muted);font-size:.9rem;margin-top:4px}
   .budget .cap.hl{color:var(--gold-soft);margin-top:12px}
 
+  .paid{display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:11px 18px;border-radius:5px;
+    border:1px solid rgba(201,162,75,.45);background:rgba(201,162,75,.1);font-size:.92rem;font-weight:600;text-align:left}
+  .paid .ok{font-family:var(--han);color:var(--gold);font-size:1.15rem;line-height:1;flex-shrink:0}
+  .paid b{color:var(--gold-soft);font-weight:800}
+  .paid s{color:var(--muted);font-weight:500}
+
+  /* ---------- SUB-TAB NGAN SACH ---------- */
+  .subtabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .subtab{font-family:var(--font);font-weight:700;font-size:.84rem;color:var(--muted);cursor:pointer;
+    border:1px solid var(--line);background:rgba(236,224,200,.03);border-radius:5px;padding:9px 15px;
+    display:inline-flex;align-items:center;gap:7px;transition:color .2s,border-color .2s,background .2s}
+  .subtab .h{font-family:var(--han);color:var(--gold);font-weight:400;font-size:1rem;line-height:1}
+  .subtab:hover{color:var(--paper);border-color:rgba(201,162,75,.45)}
+  .subtab.active{color:#fbeee0;background:linear-gradient(160deg,var(--cinnabar),var(--cinnabar-deep));border-color:var(--cinnabar)}
+  .subtab.active .h{color:#fbeee0}
+  .subtab:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .subpanel{display:none}
+  .subpanel.active{display:block;animation:fadeIn .3s ease}
+
+  /* ---------- QUY DONG GOP ---------- */
+  .fund{border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .fund-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(236,224,200,.07)}
+  .fund-row:last-child{border-bottom:none}
+  .fund-row.head{background:rgba(236,224,200,.04);font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .fund-row.paid-in{background:rgba(201,162,75,.06)}
+  .fund-row .idx{font-family:var(--han);color:var(--gold);font-size:1rem;min-width:1.4em;text-align:center;flex-shrink:0}
+  .fund-row .who{flex:1;min-width:0;font-weight:700;font-size:.94rem}
+  .fund-row.paid-in .who{color:var(--gold-soft)}
+  .fund-row .who small{display:block;font-weight:500;font-size:.72rem;color:var(--muted)}
+  .fund-row input{width:134px;flex-shrink:0;text-align:right;font-family:"Chakra Petch",var(--font);font-weight:700;font-size:.95rem;
+    color:var(--paper);background:rgba(236,224,200,.04);border:1px solid var(--line);border-radius:4px;padding:8px 10px}
+  .fund-row input::placeholder{color:rgba(154,144,117,.5);font-weight:500}
+  .fund-row input:focus{outline:none;border-color:var(--gold);background:rgba(201,162,75,.08)}
+  .fund-row .dong{font-size:.78rem;color:var(--muted);flex-shrink:0;width:12px}
+  @media(max-width:520px){.fund-row{gap:8px;padding:10px 12px}.fund-row input{width:106px;font-size:.88rem}.fund-row .who{font-size:.88rem}}
+  .fund-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  @media(max-width:560px){.fund-stats{grid-template-columns:1fr}}
+  .fstat{border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;background:rgba(17,21,29,.5)}
+  .fstat b{display:block;font-family:"Chakra Petch",var(--font);font-size:1.3rem;font-weight:700;
+    background:linear-gradient(100deg,var(--gold),var(--cinnabar));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .fstat span{display:block;margin-top:5px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .fund-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:14px;font-size:.8rem;color:var(--muted)}
+  .fund-bar .st.ok{color:var(--gold-soft)}
+  .fund-bar .st.err{color:var(--cinnabar);font-weight:700}
+
   .warn{border-left:3px solid var(--cinnabar);border-radius:0 6px 6px 0;background:rgba(207,47,42,.08);padding:18px 20px;font-size:.93rem}
   .warn b{color:var(--cinnabar)}
+
+  /* ---------- MENU ---------- */
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .menu-grid .span2{grid-column:1/-1}
+  @media(max-width:640px){.menu-grid{grid-template-columns:1fr}}
+  .dish{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px dashed rgba(236,224,200,.1)}
+  .dish:last-child{border-bottom:none}
+  .dish .no{font-family:var(--han);color:var(--gold);font-size:1.05rem;line-height:1.6;min-width:1.3em;text-align:center;flex-shrink:0}
+  .dish .body{flex:1;min-width:0}
+  .dish .nm{font-weight:700;font-size:.98rem}
+  .dish .dt{color:var(--muted);font-size:.85rem;margin-top:2px}
+  .dish .dt b{color:var(--gold-soft)}
+  .tag{flex-shrink:0;margin-top:3px;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:3px;padding:4px 9px;color:var(--gold-soft);background:rgba(201,162,75,.08);white-space:nowrap}
+  .tag.red{color:#f0a4a0;border-color:rgba(207,47,42,.42);background:rgba(207,47,42,.12)}
+  .tag.ghost{color:var(--muted);border-style:dashed;background:transparent}
+
+  /* checkbox "da mua" cho mon xach theo */
+  .dish.buy{cursor:pointer;user-select:none;margin:0}
+  .dish input[type=checkbox]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+  .tick{flex-shrink:0;margin-top:2px;width:21px;height:21px;border-radius:4px;display:flex;align-items:center;justify-content:center;
+    border:1.5px solid rgba(201,162,75,.5);background:rgba(236,224,200,.04);
+    font-size:.8rem;font-weight:900;color:transparent;transition:background .18s,border-color .18s,color .18s}
+  .dish.buy:hover .tick{border-color:var(--gold)}
+  .dish input:focus-visible ~ .tick{outline:2px solid var(--cinnabar);outline-offset:2px}
+  .dish input:checked ~ .tick{background:linear-gradient(160deg,#d8443c,var(--cinnabar-deep));border-color:var(--cinnabar);color:#fbeee0}
+  .dish.buy:has(input:checked){background:rgba(201,162,75,.07);border-radius:5px}
+  .dish input:checked ~ .no{color:var(--gold-soft)}
+  .dish input:checked ~ .body .nm{color:var(--gold-soft)}
+  .dish .done{display:none;margin-left:8px;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+  .dish input:checked ~ .body .done{display:inline-block}
+  .buy-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:16px;font-size:.86rem}
+  .buy-bar .prog{flex:1;min-width:140px;height:6px;border-radius:6px;background:rgba(236,224,200,.08);overflow:hidden}
+  .buy-bar .prog i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--cinnabar),var(--gold));transition:width .35s ease}
+  .buy-bar .cnt{font-weight:800;color:var(--gold-soft);white-space:nowrap}
+  .buy-bar .st{color:var(--muted);font-size:.8rem}
+  .buy-bar .st.ok{color:var(--gold-soft)}
+  .buy-bar .st.err{color:var(--cinnabar);font-weight:700}
 
   /* ---------- TABS ---------- */
   .tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:12px 22px;margin-bottom:10px;background:rgba(11,14,19,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
@@ -261,7 +344,8 @@
     <p class="sub">Trận hạ sơn cuối cùng của đời độc thân. Đưa Mã Siêu ra đảo nâng chén luận anh hùng, quẩy một phen chấn động giang hồ, rồi hoàn trả cho tân nương — nguyên vẹn.</p>
     <div class="meta-strip">
       <span class="chip">📍 <b>Đào Hoa Đảo</b> · Hồ Trị An</span>
-      <span class="chip">🗓 Khởi hành: <b>22/08</b></span>
+      <span class="chip">🗓 Khởi hành: <b>22/08 · 7:00</b></span>
+      <span class="chip">☕ Tập kết: <b><a href="https://share.google/EEWEeoZ6OBq0fXdoc" target="_blank" rel="noopener">Cafe Milano</a></b></span>
       <span class="chip">🎯 Chủ soái: <b>Mã Siêu</b></span>
     </div>
     <div class="countdown" id="countdown" aria-live="polite">
@@ -287,6 +371,7 @@
 <nav class="tabs" aria-label="Mục lục">
   <button class="tab active" type="button" data-target="banghoi"><span class="h">众</span>Bang hội</button>
   <button class="tab" type="button" data-target="lichtrinh"><span class="h">程</span>Lịch trình</button>
+  <button class="tab" type="button" data-target="thucdon"><span class="h">宴</span>Thực đơn</button>
   <button class="tab" type="button" data-target="ngansach"><span class="h">银</span>Ngân sách</button>
   <button class="tab" type="button" data-target="hanhtrang"><span class="h">囊</span>Hành trang</button>
 </nav>
@@ -319,7 +404,7 @@
     <span class="lbl">Ra đảo &amp; khai tiệc<span>Xuất phát → hoàng hôn → lửa trại</span></span>
   </div>
   <div class="tl">
-    <div class="stop reveal"><div class="time">6:30</div><h4>Tập kết &amp; xuất phát</h4><p>Điểm hẹn ở Sài Gòn — điểm danh anh em, chia xe, đổ xăng. Ai trễ phạt một chầu.</p></div>
+    <div class="stop hot reveal"><div class="time">7:00 · điểm tập kết</div><h4>Tập kết tại <a href="https://share.google/EEWEeoZ6OBq0fXdoc" target="_blank" rel="noopener">Cafe Milano</a></h4><p>Điểm hẹn khởi hành — cà phê một ly cho tỉnh, điểm danh anh em, chia xe, đổ xăng rồi lên đường. <b>Ai trễ phạt một chầu.</b></p></div>
     <div class="stop reveal"><div class="time">8:30</div><h4>Tới bến Trị An (Mã Đà)</h4><p>Gửi xe, tập kết đồ đạc, xuống bến chờ cano.</p></div>
     <div class="stop reveal"><div class="time">9:00</div><h4>Cano ra Đào Hoa Đảo</h4><p>Lên đảo, nhận lều/glamping, dựng trại, cắm cờ bang hội.</p></div>
     <div class="stop reveal"><div class="time">12:00</div><h4>Ăn trưa trên đảo</h4><p>Nạp năng lượng, họp bàn kịch bản quẩy buổi tối.</p></div>
@@ -347,16 +432,169 @@
 </section>
 
 
+<!-- THỰC ĐƠN -->
+<section class="wrap panel" id="tab-thucdon" data-tab="thucdon">
+  <div class="sec-head">
+    <span class="eyebrow">Yến tiệc</span>
+    <h2><span class="han">宴</span>Thực đơn đêm hội</h2>
+    <p>Bản đề xuất của bang chủ cho tiệc BBQ tối <b>thứ 7</b>. Món nào đảo lo thì gọi đặt trước, món nào anh em xách thì <b>ghi tên vào là khỏi quên</b>.</p>
+  </div>
+
+  <div class="menu-grid">
+    <div class="block red">
+      <h3><span class="g">島</span>Bếp đảo lo</h3>
+      <div class="dish">
+        <span class="no">一</span>
+        <div class="body">
+          <div class="nm">Gà đảo nướng</div>
+          <div class="dt"><b>1 con</b> — ăn tại đảo, dặn bếp làm sẵn</div>
+        </div>
+        <span class="tag red">Đặt đảo</span>
+      </div>
+      <div class="dish">
+        <span class="no">二</span>
+        <div class="body">
+          <div class="nm">Lẩu cá tầm</div>
+          <div class="dt"><b>1 nồi</b> — tầm <b>300–500k</b>, ăn tại đảo</div>
+        </div>
+        <span class="tag red">Đặt đảo</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3><span class="g">囊</span>Xách từ đất liền</h3>
+      <label class="dish buy">
+        <input type="checkbox" data-buy="bo">
+        <span class="tick">✓</span>
+        <span class="no">三</span>
+        <div class="body">
+          <div class="nm">Bò thượng hạng nướng kiểu Steak<span class="done">đã mua</span></div>
+          <div class="dt"><b>1.5 kg</b> — ướp sẵn ở nhà cho thấm</div>
+        </div>
+        <span class="tag">Siêu</span>
+      </label>
+      <label class="dish buy">
+        <input type="checkbox" data-buy="khoaibap">
+        <span class="tick">✓</span>
+        <span class="no">五</span>
+        <div class="body">
+          <div class="nm">Khoai lang &amp; bắp nướng<span class="done">đã mua</span></div>
+          <div class="dt">Món vùi than lúc khuya ngồi lửa trại</div>
+        </div>
+        <span class="tag">Siêu</span>
+      </label>
+      <label class="dish buy">
+        <input type="checkbox" data-buy="traicay">
+        <span class="tick">✓</span>
+        <span class="no">七</span>
+        <div class="body">
+          <div class="nm">Trái cây tươi<span class="done">đã mua</span></div>
+          <div class="dt">Ít <b>đào</b> cho đúng chất Đào Hoa Đảo — giải ngán, giải rượu</div>
+        </div>
+        <span class="tag">Quang Tèo</span>
+      </label>
+    </div>
+
+    <div class="block">
+      <h3><span class="g">酒</span>Tửu lệnh · bia rượu</h3>
+      <label class="dish buy">
+        <input type="checkbox" data-buy="jager">
+        <span class="tick">✓</span>
+        <span class="no">六</span>
+        <div class="body">
+          <div class="nm">Jägermeister — kiểu “tàu ngầm”<span class="done">đã mua</span></div>
+          <div class="dt"><b>2 chai 1000ml</b> — thả ly vào bia, uống có chừng mực</div>
+        </div>
+        <span class="tag">Bảo</span>
+      </label>
+      <label class="dish buy">
+        <input type="checkbox" data-buy="blanc">
+        <span class="tick">✓</span>
+        <span class="no">八</span>
+        <div class="body">
+          <div class="nm">Bia Blanc<span class="done">đã mua</span></div>
+          <div class="dt"><b>1 thùng</b> — do <b>Thêm</b> tài trợ</div>
+        </div>
+        <span class="tag">Thêm tài trợ</span>
+      </label>
+      <label class="dish buy">
+        <input type="checkbox" data-buy="carlsberg">
+        <span class="tick">✓</span>
+        <span class="no">九</span>
+        <div class="body">
+          <div class="nm">Carlsberg Smooth<span class="done">đã mua</span></div>
+          <div class="dt"><b>2 thùng</b> — Siêu lo phần này</div>
+        </div>
+        <span class="tag">Siêu</span>
+      </label>
+    </div>
+
+    <div class="block span2">
+      <h3><span class="g">湖</span>Săn trên hồ · tùy hứng</h3>
+      <div class="dish">
+        <span class="no">四</span>
+        <div class="body">
+          <div class="nm">Hải sản &amp; cá nướng</div>
+          <div class="dt"><b>Chiều thứ 7</b>, trong lúc đua vỏ lãi thì tạt qua hỏi mua cá trên hồ — có thì nướng, không có thì thôi, không tính vào phần bắt buộc.</div>
+        </div>
+        <span class="tag ghost">Tùy duyên</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="buy-bar">
+    <span class="cnt" id="buyCount">Đã mua 0/6 phần</span>
+    <span class="prog" aria-hidden="true"><i id="buyProg"></i></span>
+    <span class="st" id="buySt">Tick vào ô là cả bang cùng thấy</span>
+  </div>
+
+  <div class="warn" style="margin-top:16px">
+    <b>Chốt sổ trước ngày đi:</b> gọi đảo đặt <b>gà + lẩu cá tầm</b> (nhớ hỏi đảo có tính phí nướng đồ mang theo không) · Siêu ướp bò &amp; mua khoai bắp · Quang Tèo lo trái cây · Bảo giữ 2 chai Jäger · <b>Thêm</b> tài trợ 1 thùng Blanc, <b>Siêu</b> ôm 2 thùng Carlsberg Smooth — ly đầu tiên xin mời huynh Thêm.
+  </div>
+</section>
+
 <!-- NGÂN SÁCH -->
 <section class="wrap panel" id="tab-ngansach" data-tab="ngansach">
   <div class="sec-head">
     <span class="eyebrow">Ngân khố</span>
-    <h2><span class="han">銀</span>Ngân sách dự trù</h2>
+    <h2><span class="han">銀</span>Ngân sách &amp; quỹ bang</h2>
   </div>
+
+  <div class="subtabs" role="tablist">
+    <button class="subtab active" type="button" data-sub="dutru"><span class="h">算</span>Dự trù chi phí</button>
+    <button class="subtab" type="button" data-sub="donggop"><span class="h">捐</span>Đóng góp huynh đệ</button>
+  </div>
+
+  <div class="subpanel active" data-sub="dutru">
   <div class="budget">
     <div class="big">700k – 1.2tr <span style="font-size:.5em;font-weight:700;color:var(--muted)">/ người</span></div>
     <div class="cap">Gồm lều/glamping · cano khứ hồi · ăn uống BBQ · bia · SUP. Tùy số lượng anh em.</div>
-    <div class="cap hl">Đào Hoa Đảo chưa niêm yết giá công khai — chưởng quỹ inbox thẳng fanpage để chốt số chính xác &amp; đặt cọc giữ chỗ (nhất là cuối tuần).</div>
+    <div class="paid"><span class="ok">✓</span><span>Ngân khố đã xuất <b>500.000đ</b> đặt cọc giữ chỗ đảo — chỗ đã chắc, khoản này trừ vào tổng khi quyết toán.</span></div>
+    <div class="cap hl" style="margin-top:14px">Đào Hoa Đảo chưa niêm yết giá công khai — chưởng quỹ inbox thẳng fanpage chốt con số cuối cho <b>phần còn lại</b>, rồi chia đầu người.</div>
+  </div>
+  </div>
+
+  <div class="subpanel" data-sub="donggop">
+    <div class="fund" id="fundList">
+      <div class="fund-row head">
+        <span class="idx">#</span>
+        <span class="who">Huynh đệ</span>
+        <span style="width:134px;text-align:right;flex-shrink:0">Đã đóng (đ)</span>
+        <span class="dong"></span>
+      </div>
+    </div>
+    <div class="fund-stats">
+      <div class="fstat"><b id="fundTotal">0đ</b><span>Tổng đã thu</span></div>
+      <div class="fstat"><b id="fundSpent">500.000đ</b><span>Đã chi · cọc đảo</span></div>
+      <div class="fstat"><b id="fundLeft">0đ</b><span>Quỹ còn lại</span></div>
+    </div>
+    <div class="fund-bar">
+      <span id="fundCount">Chưa ai đóng</span>
+      <span class="st" id="fundSt">Gõ số tiền là cả bang cùng thấy</span>
+    </div>
+    <div class="warn" style="margin-top:16px">
+      <b>Chưởng quỹ:</b> tên huynh đệ lấy từ tab <b>Bang hội</b> — đổi tên bên đó thì bảng này đổi theo. Gõ số tiền không cần dấu chấm, hệ thống tự chia hàng nghìn.
+    </div>
   </div>
 </section>
 
@@ -414,7 +652,7 @@
     }));
   })();
 
-  // Đếm ngược tới ngày khởi hành 22/08 (6:30 sáng, giờ VN)
+  // Đếm ngược tới giờ tập kết 22/08 (7:00 sáng, giờ VN) tại Cafe Milano
   (function(){
     const D=document.getElementById('cdD'),H=document.getElementById('cdH'),
           M=document.getElementById('cdM'),S=document.getElementById('cdS'),
@@ -424,8 +662,8 @@
     function target(){
       const now=new Date();
       let y=now.getFullYear();
-      let t=new Date(y,7,22,6,30,0);            // thang 7 = thang 8
-      if(now-t>36*3600*1000)t=new Date(y+1,7,22,6,30,0);
+      let t=new Date(y,7,22,7,0,0);             // thang 7 = thang 8
+      if(now-t>36*3600*1000)t=new Date(y+1,7,22,7,0,0);
       return t;
     }
     const T=target();
@@ -449,7 +687,7 @@
       NOTE.className='cd-note'+(d<=7?' hot':'');
     }
     tick();setInterval(tick,1000);
-    BOX.setAttribute('title','Khởi hành 22/08 lúc 6:30 sáng');
+    BOX.setAttribute('title','Tập kết 22/08 lúc 7:00 sáng tại Cafe Milano');
   })();
 
   // Cánh đào rơi
@@ -474,6 +712,200 @@
     if(!('IntersectionObserver' in window)){items.forEach(i=>i.classList.add('in'));return;}
     const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
     items.forEach(i=>io.observe(i));
+  })();
+
+  // Ngan sach: 2 tab con
+  (function(){
+    const subs=document.querySelectorAll('.subtab'),pans=document.querySelectorAll('.subpanel');
+    subs.forEach(s=>s.addEventListener('click',()=>{
+      subs.forEach(x=>x.classList.toggle('active',x===s));
+      pans.forEach(p=>p.classList.toggle('active',p.dataset.sub===s.dataset.sub));
+    }));
+  })();
+
+  // Quy bang: so tien tung huynh de dong - dung chung ca bang
+  (function(){
+    const list=document.getElementById('fundList');
+    if(!list)return;
+    const DEPOSIT=500000;                       // da coc dao
+    const HAN=['一','二','三','四','五','六','七','八','九'];
+    const KEY='dhd_fund_v1';
+    const SB={
+      url:'https://szmbxjelwafycacbebxo.supabase.co',
+      key:'sb_publishable_SocA6dO9jbr-Xggz8EDXog_0s4N73yX',
+      bucket:'bang-hoi',
+      file:'quy.json'
+    };
+    const cloudOn=()=>!!(SB.url&&SB.key);
+    const pubUrl=()=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+SB.file;
+    const nf=new Intl.NumberFormat('vi-VN');
+    const money=n=>nf.format(n||0)+'đ';
+    const el={total:document.getElementById('fundTotal'),spent:document.getElementById('fundSpent'),
+              left:document.getElementById('fundLeft'),count:document.getElementById('fundCount'),
+              st:document.getElementById('fundSt')};
+
+    let state={};
+    try{const s=localStorage.getItem(KEY);if(s)state=JSON.parse(s)||{};}catch(e){}
+    let lastLocal=0,pushing=false,timer=null,rows=[];
+
+    function names(){
+      let m=null;
+      try{const s=localStorage.getItem('dhd_roster_v1');if(s)m=JSON.parse(s);}catch(e){}
+      return Array.from({length:9},(_,i)=>{
+        const x=(m&&m[i])||{};
+        return {name:(x.name||'').trim()||('Huynh đệ '+(i+1)),role:(x.role||'').trim()};
+      });
+    }
+    function setSt(t,k){el.st.textContent=t||'';el.st.className='st'+(k?' '+k:'');}
+    function stats(){
+      let total=0,n=0;
+      for(let i=0;i<9;i++){const v=+state[i]||0;if(v>0){total+=v;n++;}}
+      el.total.textContent=money(total);
+      el.spent.textContent=money(DEPOSIT);
+      el.left.textContent=money(total-DEPOSIT);
+      el.count.textContent=n?('Đã có '+n+'/9 huynh đệ đóng'):'Chưa ai đóng';
+      rows.forEach((r,i)=>r.classList.toggle('paid-in',(+state[i]||0)>0));
+    }
+    function render(){
+      list.querySelectorAll('.fund-row:not(.head)').forEach(r=>r.remove());
+      rows=[];
+      names().forEach((m,i)=>{
+        const row=document.createElement('div');row.className='fund-row';
+        const idx=document.createElement('span');idx.className='idx';idx.textContent=HAN[i];
+        const who=document.createElement('span');who.className='who';who.textContent=m.name;
+        if(m.role){const s=document.createElement('small');s.textContent=m.role;who.appendChild(s);}
+        const inp=document.createElement('input');inp.type='text';inp.inputMode='numeric';
+        inp.placeholder='0';inp.setAttribute('aria-label','Số tiền '+m.name);
+        const v=+state[i]||0;inp.value=v?nf.format(v):'';
+        inp.addEventListener('input',()=>{
+          const digits=inp.value.replace(/\D/g,'');
+          inp.value=digits?nf.format(+digits):'';
+          state[i]=+digits||0;
+          lastLocal=Date.now();
+          try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+          stats();queuePush();
+        });
+        const d=document.createElement('span');d.className='dong';d.textContent='đ';
+        row.appendChild(idx);row.appendChild(who);row.appendChild(inp);row.appendChild(d);
+        list.appendChild(row);rows.push(row);
+      });
+      stats();
+    }
+    function queuePush(){
+      if(!cloudOn()){setSt('Đã lưu trên máy này (chưa nối kho chung)','ok');return;}
+      clearTimeout(timer);setSt('Đang lưu lên kho chung…','');
+      timer=setTimeout(push,800);
+    }
+    function push(){
+      pushing=true;
+      fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+SB.file,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-upsert':'true',apikey:SB.key,Authorization:'Bearer '+SB.key},
+        body:JSON.stringify({v:1,at:Date.now(),items:state})
+      })
+      .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);setSt('Đã lưu ✓ cả bang đều thấy','ok');})
+      .catch(()=>setSt('Chưa lưu được lên kho chung — kiểm tra mạng rồi gõ lại','err'))
+      .then(()=>{pushing=false;});
+    }
+    function pull(quiet){
+      if(!cloudOn()||pushing)return;
+      if(Date.now()-lastLocal<5000)return;                  // vua go xong thi khoan ghi de
+      fetch(pubUrl()+'?t='+Date.now(),{cache:'no-store'})
+        .then(r=>r.ok?r.json():null)
+        .then(d=>{
+          if(!d||!d.items)return;
+          if(JSON.stringify(d.items)!==JSON.stringify(state)){
+            state=d.items;
+            try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+            if(!document.activeElement||!list.contains(document.activeElement))render();
+            else stats();
+          }
+          if(!quiet)setSt('Sổ quỹ dùng chung · ai gõ thì cả bang đều thấy','ok');
+        })
+        .catch(()=>{if(!quiet)setSt('Chưa tải được sổ quỹ chung — đang xem bản lưu trên máy','err');});
+    }
+
+    render();
+    if(cloudOn()){
+      pull(false);
+      setInterval(()=>pull(true),20000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden){pull(true);render();}});
+    }else setSt('Chỉ lưu trên máy này','');
+    // ten doi ben tab Bang hoi -> bang quy cap nhat theo
+    document.querySelector('.tab[data-target="ngansach"]').addEventListener('click',()=>{
+      if(!document.activeElement||!list.contains(document.activeElement))render();
+    });
+  })();
+
+  // Thuc don: check "da mua" dung chung ca bang (cung kho Supabase voi anh bang hoi)
+  (function(){
+    const boxes=[].slice.call(document.querySelectorAll('input[data-buy]'));
+    if(!boxes.length)return;
+    const KEY='dhd_menu_v1';
+    const SB={
+      url:'https://szmbxjelwafycacbebxo.supabase.co',
+      key:'sb_publishable_SocA6dO9jbr-Xggz8EDXog_0s4N73yX',
+      bucket:'bang-hoi',
+      file:'menu.json'
+    };
+    const cloudOn=()=>!!(SB.url&&SB.key);
+    const pubUrl=()=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+SB.file;
+    const cnt=document.getElementById('buyCount'),
+          prog=document.getElementById('buyProg'),
+          st=document.getElementById('buySt');
+
+    let state={};
+    try{const s=localStorage.getItem(KEY);if(s)state=JSON.parse(s)||{};}catch(e){}
+    let lastLocal=0, pushing=false;
+
+    function setSt(text,kind){st.textContent=text||'';st.className='st'+(kind?' '+kind:'');}
+    function paint(){
+      boxes.forEach(b=>{b.checked=!!state[b.dataset.buy];});
+      const done=boxes.filter(b=>b.checked).length;
+      cnt.textContent='Đã mua '+done+'/'+boxes.length+' phần';
+      prog.style.width=Math.round(done/boxes.length*100)+'%';
+    }
+    function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+
+    function pull(quiet){
+      if(!cloudOn()||pushing)return;
+      if(Date.now()-lastLocal<4000)return;                 // vua tick xong thi khoan ghi de
+      fetch(pubUrl()+'?t='+Date.now(),{cache:'no-store'})
+        .then(r=>r.ok?r.json():null)
+        .then(d=>{
+          if(!d||!d.items)return;
+          if(JSON.stringify(d.items)!==JSON.stringify(state)){state=d.items;saveLocal();paint();}
+          if(!quiet)setSt('Danh sách dùng chung · ai tick thì cả bang đều thấy','ok');
+        })
+        .catch(()=>{if(!quiet)setSt('Chưa tải được danh sách chung — đang xem bản lưu trên máy','err');});
+    }
+    function push(){
+      if(!cloudOn()){setSt('Đã lưu trên máy này (chưa nối kho chung)','ok');return;}
+      pushing=true;setSt('Đang lưu lên kho chung…','');
+      fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+SB.file,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-upsert':'true',apikey:SB.key,Authorization:'Bearer '+SB.key},
+        body:JSON.stringify({v:1,at:Date.now(),items:state})
+      })
+      .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);setSt('Đã lưu ✓ cả bang đều thấy','ok');})
+      .catch(()=>setSt('Chưa lưu được lên kho chung — kiểm tra mạng rồi tick lại','err'))
+      .then(()=>{pushing=false;});
+    }
+
+    boxes.forEach(b=>b.addEventListener('change',()=>{
+      state[b.dataset.buy]=b.checked;
+      lastLocal=Date.now();
+      saveLocal();paint();push();
+    }));
+
+    paint();
+    if(cloudOn()){
+      pull(false);
+      setInterval(()=>pull(true),20000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull(true);});
+    }else{
+      setSt('Chỉ lưu trên máy này','');
+    }
   })();
 
   // Bang hội: upload ảnh 9 huynh đệ
