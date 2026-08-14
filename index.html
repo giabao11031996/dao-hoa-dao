@@ -202,7 +202,10 @@
   .fund-row .who-h{width:116px;flex-shrink:0}
   .fund-row .amt-h{width:126px;flex-shrink:0;text-align:right}
   .fund-row input.txt{flex:1;min-width:0;width:auto;text-align:left;font-family:var(--font);font-weight:600;font-size:.92rem}
-  .fund-row input.whoin{width:116px;text-align:left;font-family:var(--font);font-weight:600;font-size:.88rem;color:var(--gold-soft)}
+  .fund-row input.whoin{width:116px;text-align:left;font-family:var(--font);font-weight:600;font-size:.88rem;color:var(--gold-soft);
+    cursor:pointer;background:rgba(201,162,75,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23c9a24b' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 9px center/9px 6px;
+    padding-right:24px}
+  .fund-row input.whoin::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer}
   .fund-row input.amt{width:126px}
   .del{flex-shrink:0;width:26px;height:26px;border-radius:4px;cursor:pointer;line-height:1;font-size:1rem;
     border:1px solid var(--line);background:transparent;color:var(--muted);font-family:var(--font)}
@@ -597,6 +600,7 @@
         <span style="width:26px;flex-shrink:0"></span>
       </div>
     </div>
+    <datalist id="dsBangHoi"></datalist>
     <button class="btn-sm" id="chiAdd" type="button">＋ Thêm khoản chi</button>
     <div class="fund-stats">
       <div class="fstat"><b id="chiTotal">0đ</b><span>Tổng đã chi</span></div>
@@ -676,6 +680,16 @@
 </footer>
 
 <script>
+  // Ten 9 huynh de lay tu tab Bang hoi (dung chung cho bang tien chi + so quy)
+  function bangHoiNames(){
+    let m=null;
+    try{const s=localStorage.getItem('dhd_roster_v1');if(s)m=JSON.parse(s);}catch(e){}
+    return Array.from({length:9},(_,i)=>{
+      const x=(m&&m[i])||{};
+      return {name:(x.name||'').trim()||('Huynh đệ '+(i+1)),role:(x.role||'').trim()};
+    });
+  }
+
   // Tab lệnh bài
   (function(){
     const tabs=document.querySelectorAll('.tab');
@@ -786,6 +800,16 @@
 
     function setSt(t,k){el.st.textContent=t||'';el.st.className='st'+(k?' '+k:'');}
     function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(items));}catch(e){}}
+    // danh sach goi y "ai chi" = 9 huynh de ben tab Bang hoi, go de loc
+    function fillNames(){
+      const dl=document.getElementById('dsBangHoi');
+      if(!dl)return;
+      const ns=bangHoiNames().map(m=>m.name);
+      if(dl.dataset.now===ns.join('|'))return;
+      dl.dataset.now=ns.join('|');
+      dl.innerHTML='';
+      ns.forEach(n=>{const o=document.createElement('option');o.value=n;dl.appendChild(o);});
+    }
     function total(){return items.reduce((s,x)=>s+(+x.amt||0),0);}
     function stats(){
       const t=total();
@@ -812,8 +836,10 @@
         note.addEventListener('input',()=>{items[i].note=note.value;touch();});
 
         const who=document.createElement('input');who.className='whoin';who.type='text';
-        who.placeholder='Ai chi';who.value=it.who||'';who.setAttribute('aria-label','Ai chi');
+        who.setAttribute('list','dsBangHoi');who.autocomplete='off';
+        who.placeholder='Chọn huynh đệ';who.value=it.who||'';who.setAttribute('aria-label','Ai chi');
         who.addEventListener('input',()=>{items[i].who=who.value;touch();});
+        who.addEventListener('focus',()=>{fillNames();who.select();});
 
         const amt=document.createElement('input');amt.className='amt';amt.type='text';amt.inputMode='numeric';
         amt.placeholder='0';amt.value=(+it.amt)?nf.format(+it.amt):'';amt.setAttribute('aria-label','Số tiền');
@@ -880,12 +906,13 @@
       if(ins.length)ins[ins.length-1].focus();
     });
 
-    render();
+    fillNames();render();
     if(cloudOn()){
       pull(false);
       setInterval(()=>pull(true),20000);
-      document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull(true);});
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden){pull(true);fillNames();}});
     }else setSt('Chỉ lưu trên máy này','');
+    document.querySelector('.tab[data-target="ngansach"]').addEventListener('click',fillNames);
   })();
 
   // Quy bang: so tien tung huynh de dong - dung chung ca bang
@@ -913,14 +940,7 @@
     try{const s=localStorage.getItem(KEY);if(s)state=JSON.parse(s)||{};}catch(e){}
     let lastLocal=0,pushing=false,timer=null,rows=[];
 
-    function names(){
-      let m=null;
-      try{const s=localStorage.getItem('dhd_roster_v1');if(s)m=JSON.parse(s);}catch(e){}
-      return Array.from({length:9},(_,i)=>{
-        const x=(m&&m[i])||{};
-        return {name:(x.name||'').trim()||('Huynh đệ '+(i+1)),role:(x.role||'').trim()};
-      });
-    }
+    const names=bangHoiNames;
     function setSt(t,k){el.st.textContent=t||'';el.st.className='st'+(k?' '+k:'');}
     function stats(){
       let total=0,n=0;
