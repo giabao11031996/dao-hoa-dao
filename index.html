@@ -319,6 +319,30 @@
   .buy-bar .st.ok{color:var(--gold-soft)}
   .buy-bar .st.err{color:var(--cinnabar);font-weight:700}
 
+  /* sua thuc don: them / doi / xoa mon */
+  .menu-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:16px}
+  .menu-bar .btn-sm{margin-top:0}
+  .menu-bar .btn-sm.on{color:#fff8ec;background:linear-gradient(160deg,var(--cinnabar),var(--cinnabar-deep));
+    border-style:solid;border-color:var(--cinnabar)}
+  .menu-bar .st{font-size:.8rem;color:var(--muted)}
+  .menu-bar .st.ok{color:var(--gold-soft)}
+  .menu-bar .st.err{color:var(--cinnabar);font-weight:700}
+  .dish.edit{display:block;padding:12px 0}
+  .dish-edit{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .dish-edit input{background:rgba(247,239,223,.07);border:1px solid var(--line);border-radius:4px;color:var(--paper);
+    font-family:var(--font);padding:7px 10px;min-width:0;font-size:.9rem}
+  .dish-edit input:focus{outline:none;border-color:var(--gold);background:rgba(238,191,98,.08)}
+  .dish-edit input.nm{flex:1 1 100%;font-weight:700;font-size:.96rem;color:var(--gold-soft)}
+  .dish-edit input.dt{flex:1 1 100%;color:var(--muted);font-size:.86rem}
+  .dish-edit input.tg{width:150px;flex-shrink:0;font-size:.82rem}
+  .dish-edit .who-lbl{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .dish-edit .buy-lbl{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .dish-edit .buy-lbl input{accent-color:var(--cinnabar);width:auto;min-width:0}
+  .dish-edit .del{margin-left:auto}
+  .dish-add{margin-top:10px;font-family:var(--font);font-weight:700;font-size:.78rem;color:var(--gold-soft);cursor:pointer;
+    border:1px dashed rgba(238,191,98,.45);background:transparent;border-radius:4px;padding:7px 12px}
+  .dish-add:hover{color:#fff8ec;border-color:var(--gold);background:rgba(238,191,98,.12)}
+
   /* ---------- TABS ---------- */
   .tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:12px 22px;margin-bottom:10px;background:rgba(24,32,46,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .tab{font-family:var(--font);font-weight:700;font-size:.88rem;color:var(--muted);cursor:pointer;border:1px solid var(--line);background:rgba(247,239,223,.06);border-radius:6px;padding:9px 16px;display:inline-flex;align-items:center;gap:7px;transition:color .2s,border-color .2s,background .2s}
@@ -538,107 +562,13 @@
     <p>Bản đề xuất của bang chủ cho tiệc BBQ tối <b>thứ 7</b>. Món nào đảo lo thì gọi đặt trước, món nào anh em xách thì <b>ghi tên vào là khỏi quên</b>.</p>
   </div>
 
-  <div class="menu-grid">
-    <div class="block red">
-      <h3><span class="g">島</span>Bếp đảo lo</h3>
-      <div class="dish">
-        <span class="no">一</span>
-        <div class="body">
-          <div class="nm">Gà đảo nướng</div>
-          <div class="dt"><b>1 con</b> — ăn tại đảo, dặn bếp làm sẵn</div>
-        </div>
-        <span class="tag red">Đặt đảo</span>
-      </div>
-      <div class="dish">
-        <span class="no">二</span>
-        <div class="body">
-          <div class="nm">Lẩu cá tầm</div>
-          <div class="dt"><b>1 nồi</b> — tầm <b>300–500k</b>, ăn tại đảo</div>
-        </div>
-        <span class="tag red">Đặt đảo</span>
-      </div>
-    </div>
-
-    <div class="block">
-      <h3><span class="g">囊</span>Xách từ đất liền</h3>
-      <label class="dish buy">
-        <input type="checkbox" data-buy="bo">
-        <span class="tick">✓</span>
-        <span class="no">三</span>
-        <div class="body">
-          <div class="nm">Bò thượng hạng nướng kiểu Steak<span class="done">đã mua</span></div>
-          <div class="dt"><b>1.5 kg</b> — ướp sẵn ở nhà cho thấm</div>
-        </div>
-        <span class="tag">Siêu</span>
-      </label>
-      <label class="dish buy">
-        <input type="checkbox" data-buy="khoaibap">
-        <span class="tick">✓</span>
-        <span class="no">五</span>
-        <div class="body">
-          <div class="nm">Khoai lang &amp; bắp nướng<span class="done">đã mua</span></div>
-          <div class="dt">Món vùi than lúc khuya ngồi lửa trại</div>
-        </div>
-        <span class="tag">Siêu</span>
-      </label>
-      <label class="dish buy">
-        <input type="checkbox" data-buy="traicay">
-        <span class="tick">✓</span>
-        <span class="no">七</span>
-        <div class="body">
-          <div class="nm">Trái cây tươi<span class="done">đã mua</span></div>
-          <div class="dt">Ít <b>đào</b> cho đúng chất Đào Hoa Đảo — giải ngán, giải rượu</div>
-        </div>
-        <span class="tag">Quang Tèo</span>
-      </label>
-    </div>
-
-    <div class="block">
-      <h3><span class="g">酒</span>Tửu lệnh · bia rượu</h3>
-      <label class="dish buy">
-        <input type="checkbox" data-buy="jager">
-        <span class="tick">✓</span>
-        <span class="no">六</span>
-        <div class="body">
-          <div class="nm">Jägermeister — kiểu “tàu ngầm”<span class="done">đã mua</span></div>
-          <div class="dt"><b>2 chai 1000ml</b> — thả ly vào bia, uống có chừng mực</div>
-        </div>
-        <span class="tag">Bảo</span>
-      </label>
-      <label class="dish buy">
-        <input type="checkbox" data-buy="blanc">
-        <span class="tick">✓</span>
-        <span class="no">八</span>
-        <div class="body">
-          <div class="nm">Bia Blanc<span class="done">đã mua</span></div>
-          <div class="dt"><b>1 thùng</b> — do <b>Thêm</b> tài trợ</div>
-        </div>
-        <span class="tag">Thêm tài trợ</span>
-      </label>
-      <label class="dish buy">
-        <input type="checkbox" data-buy="carlsberg">
-        <span class="tick">✓</span>
-        <span class="no">九</span>
-        <div class="body">
-          <div class="nm">Carlsberg Smooth<span class="done">đã mua</span></div>
-          <div class="dt"><b>2 thùng</b> — Siêu lo phần này</div>
-        </div>
-        <span class="tag">Siêu</span>
-      </label>
-    </div>
-
-    <div class="block span2">
-      <h3><span class="g">湖</span>Săn trên hồ · tùy hứng</h3>
-      <div class="dish">
-        <span class="no">四</span>
-        <div class="body">
-          <div class="nm">Hải sản &amp; cá nướng</div>
-          <div class="dt"><b>Chiều thứ 7</b>, trong lúc đua vỏ lãi thì tạt qua hỏi mua cá trên hồ — có thì nướng, không có thì thôi, không tính vào phần bắt buộc.</div>
-        </div>
-        <span class="tag ghost">Tùy duyên</span>
-      </div>
-    </div>
+  <div class="menu-bar">
+    <button class="btn-sm" id="menuEdit" type="button">✎ Sửa thực đơn</button>
+    <button class="btn-sm" id="menuReset" type="button" hidden>↺ Về thực đơn gốc</button>
+    <span class="st" id="menuSt"></span>
   </div>
+
+  <div class="menu-grid" id="menuGrid"></div>
 
   <div class="buy-bar">
     <span class="cnt" id="buyCount">Đã mua 0/6 phần</span>
@@ -1468,74 +1398,262 @@
     });
   })();
 
-  // Thuc don: check "da mua" dung chung ca bang (cung kho Supabase voi anh bang hoi)
+  // Thuc don: them moi / chinh sua / xoa mon + tick "da mua", dung chung ca bang
   (function(){
-    const boxes=[].slice.call(document.querySelectorAll('input[data-buy]'));
-    if(!boxes.length)return;
-    const KEY='dhd_menu_v1';
+    const grid=document.getElementById('menuGrid');
+    if(!grid)return;
+    const KEY='dhd_menu_v2';
+    const OLDKEY='dhd_menu_v1';          // ban cu: chi luu trang thai da mua
+    const BUILD=1;                       // tang khi sua thuc don goc trong code
     const SB={
       url:'https://szmbxjelwafycacbebxo.supabase.co',
       key:'sb_publishable_SocA6dO9jbr-Xggz8EDXog_0s4N73yX',
       bucket:'bang-hoi',
-      file:'menu.json'
+      file:'thucdon.json',
+      oldFile:'menu.json'
     };
     const cloudOn=()=>!!(SB.url&&SB.key);
-    const pubUrl=()=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+SB.file;
-    const cnt=document.getElementById('buyCount'),
-          prog=document.getElementById('buyProg'),
-          st=document.getElementById('buySt');
-
-    let state={};
-    try{const s=localStorage.getItem(KEY);if(s)state=JSON.parse(s)||{};}catch(e){}
-    let lastLocal=0, pushing=false;
-
-    function setSt(text,kind){st.textContent=text||'';st.className='st'+(kind?' '+kind:'');}
-    function paint(){
-      boxes.forEach(b=>{b.checked=!!state[b.dataset.buy];});
-      const done=boxes.filter(b=>b.checked).length;
-      cnt.textContent='Đã mua '+done+'/'+boxes.length+' phần';
-      prog.style.width=Math.round(done/boxes.length*100)+'%';
-    }
-    function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
-
-    function pull(quiet){
-      if(!cloudOn()||pushing)return;
-      if(Date.now()-lastLocal<4000)return;                 // vua tick xong thi khoan ghi de
-      fetch(pubUrl()+'?t='+Date.now(),{cache:'no-store'})
-        .then(r=>r.ok?r.json():null)
-        .then(d=>{
-          if(!d||!d.items)return;
-          if(JSON.stringify(d.items)!==JSON.stringify(state)){state=d.items;saveLocal();paint();}
-          if(!quiet)setSt('Danh sách dùng chung · ai tick thì cả bang đều thấy','ok');
-        })
-        .catch(()=>{if(!quiet)setSt('Chưa tải được danh sách chung — đang xem bản lưu trên máy','err');});
-    }
-    function push(){
-      if(!cloudOn()){setSt('Đã lưu trên máy này (chưa nối kho chung)','ok');return;}
-      pushing=true;setSt('Đang lưu lên kho chung…','');
-      fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+SB.file,{
+    const pubUrl=n=>SB.url+'/storage/v1/object/public/'+SB.bucket+'/'+n;
+    function cloudPut(body){
+      return fetch(SB.url+'/storage/v1/object/'+SB.bucket+'/'+SB.file,{
         method:'POST',
         headers:{'Content-Type':'application/json','x-upsert':'true',apikey:SB.key,Authorization:'Bearer '+SB.key},
-        body:JSON.stringify({v:1,at:Date.now(),items:state})
-      })
-      .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);setSt('Đã lưu ✓ cả bang đều thấy','ok');})
-      .catch(()=>setSt('Chưa lưu được lên kho chung — kiểm tra mạng rồi tick lại','err'))
-      .then(()=>{pushing=false;});
+        body:body
+      }).then(r=>r.ok?r:r.text().then(t=>{throw new Error('HTTP '+r.status+' '+t.slice(0,90));}));
+    }
+    const cloudGet=n=>fetch(pubUrl(n)+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+
+    const HAN=['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u4e03','\u516b','\u4e5d','\u5341',
+               '\u5341\u4e00','\u5341\u4e8c','\u5341\u4e09','\u5341\u56db','\u5341\u4e94','\u5341\u516d',
+               '\u5341\u4e03','\u5341\u516b','\u5341\u4e5d','\u4e8c\u5341'];
+
+    const DEFAULT={groups:[
+      {han:'\u5cf6',title:'B\u1ebfp \u0111\u1ea3o lo',red:true,items:[
+        {id:'ga',nm:'G\u00e0 \u0111\u1ea3o n\u01b0\u1edbng',dt:'**1 con** \u2014 \u0103n t\u1ea1i \u0111\u1ea3o, d\u1eb7n b\u1ebfp l\u00e0m s\u1eb5n',tag:'\u0110\u1eb7t \u0111\u1ea3o',tagKind:'red',buy:false,bought:false},
+        {id:'lauca',nm:'L\u1ea9u c\u00e1 t\u1ea7m',dt:'**1 n\u1ed3i** \u2014 t\u1ea7m **300\u2013500k**, \u0103n t\u1ea1i \u0111\u1ea3o',tag:'\u0110\u1eb7t \u0111\u1ea3o',tagKind:'red',buy:false,bought:false}
+      ]},
+      {han:'\u56ca',title:'X\u00e1ch t\u1eeb \u0111\u1ea5t li\u1ec1n',items:[
+        {id:'bo',nm:'B\u00f2 th\u01b0\u1ee3ng h\u1ea1ng n\u01b0\u1edbng ki\u1ec3u Steak',dt:'**1.5 kg** \u2014 \u01b0\u1edbp s\u1eb5n \u1edf nh\u00e0 cho th\u1ea5m',tag:'Si\u00eau',tagKind:'',buy:true,bought:false},
+        {id:'khoaibap',nm:'Khoai lang & b\u1eafp n\u01b0\u1edbng',dt:'M\u00f3n v\u00f9i than l\u00fac khuya ng\u1ed3i l\u1eeda tr\u1ea1i',tag:'Si\u00eau',tagKind:'',buy:true,bought:false},
+        {id:'traicay',nm:'Tr\u00e1i c\u00e2y t\u01b0\u01a1i',dt:'\u00cdt **\u0111\u00e0o** cho \u0111\u00fang ch\u1ea5t \u0110\u00e0o Hoa \u0110\u1ea3o \u2014 gi\u1ea3i ng\u00e1n, gi\u1ea3i r\u01b0\u1ee3u',tag:'Quang T\u00e8o',tagKind:'',buy:true,bought:false}
+      ]},
+      {han:'\u9152',title:'T\u1eedu l\u1ec7nh \u00b7 bia r\u01b0\u1ee3u',items:[
+        {id:'jager',nm:'J\u00e4germeister \u2014 ki\u1ec3u \u201ct\u00e0u ng\u1ea7m\u201d',dt:'**2 chai 1000ml** \u2014 th\u1ea3 ly v\u00e0o bia, u\u1ed1ng c\u00f3 ch\u1eebng m\u1ef1c',tag:'B\u1ea3o',tagKind:'',buy:true,bought:false},
+        {id:'blanc',nm:'Bia Blanc',dt:'**1 th\u00f9ng** \u2014 do **Th\u00eam** t\u00e0i tr\u1ee3',tag:'Th\u00eam t\u00e0i tr\u1ee3',tagKind:'',buy:true,bought:false},
+        {id:'carlsberg',nm:'Carlsberg Smooth',dt:'**2 th\u00f9ng** \u2014 Si\u00eau lo ph\u1ea7n n\u00e0y',tag:'Si\u00eau',tagKind:'',buy:true,bought:false}
+      ]},
+      {han:'\u6e56',title:'S\u0103n tr\u00ean h\u1ed3 \u00b7 t\u00f9y h\u1ee9ng',span2:true,items:[
+        {id:'haisan',nm:'H\u1ea3i s\u1ea3n & c\u00e1 n\u01b0\u1edbng',dt:'**Chi\u1ec1u th\u1ee9 7**, trong l\u00fac \u0111ua v\u1ecf l\u00e3i th\u00ec t\u1ea1t qua h\u1ecfi mua c\u00e1 tr\u00ean h\u1ed3 \u2014 c\u00f3 th\u00ec n\u01b0\u1edbng, kh\u00f4ng c\u00f3 th\u00ec th\u00f4i, kh\u00f4ng t\u00ednh v\u00e0o ph\u1ea7n b\u1eaft bu\u1ed9c.',tag:'T\u00f9y duy\u00ean',tagKind:'ghost',buy:false,bought:false}
+      ]}
+    ]};
+    const clone=o=>JSON.parse(JSON.stringify(o));
+
+    let groups=null,at=0,editing=false;
+    try{
+      const raw=localStorage.getItem(KEY);
+      if(raw){const p=JSON.parse(raw);if(p&&Array.isArray(p.groups)&&(p.build||0)>=BUILD){groups=p.groups;at=p.at||0;}}
+    }catch(e){}
+    if(!groups){
+      groups=clone(DEFAULT).groups;
+      // Giu lai trang thai "da mua" ma anh em da tick o ban cu
+      try{
+        const old=JSON.parse(localStorage.getItem(OLDKEY)||'null');
+        if(old)applyBought(old);
+      }catch(e){}
     }
 
-    boxes.forEach(b=>b.addEventListener('change',()=>{
-      state[b.dataset.buy]=b.checked;
-      lastLocal=Date.now();
-      saveLocal();paint();push();
-    }));
+    function applyBought(map){
+      if(!map)return false;
+      let hit=false;
+      groups.forEach(g=>g.items.forEach(it=>{
+        if(Object.prototype.hasOwnProperty.call(map,it.id)&&it.bought!==!!map[it.id]){it.bought=!!map[it.id];hit=true;}
+      }));
+      return hit;
+    }
 
-    paint();
+    const stEl=document.getElementById('menuSt'),
+          cnt=document.getElementById('buyCount'),
+          prog=document.getElementById('buyProg'),
+          barSt=document.getElementById('buySt');
+    function setSt(text,kind){
+      if(stEl){stEl.textContent=text||'';stEl.className='st'+(kind?' '+kind:'');}
+      if(barSt){barSt.textContent=text||'';barSt.className='st'+(kind?' '+kind:'');}
+    }
+
+    function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify({v:2,build:BUILD,at:at,groups:groups}));}catch(e){}}
+    let pushTimer=null;
+    function push(){
+      if(!cloudOn()){setSt('Ch\u1ec9 l\u01b0u tr\u00ean m\u00e1y n\u00e0y','');return;}
+      clearTimeout(pushTimer);
+      setSt('\u0110ang l\u01b0u l\u00ean kho chung\u2026','');
+      pushTimer=setTimeout(()=>{
+        cloudPut(JSON.stringify({v:2,build:BUILD,at:at,groups:groups}))
+          .then(()=>setSt('\u0110\u00e3 l\u01b0u \u2713 c\u1ea3 bang \u0111\u1ec1u th\u1ea5y','ok'))
+          .catch(()=>setSt('Ch\u01b0a l\u01b0u \u0111\u01b0\u1ee3c l\u00ean kho chung \u2014 ki\u1ec3m tra m\u1ea1ng r\u1ed3i s\u1eeda l\u1ea1i','err'));
+      },700);
+    }
+    function touch(){at=Date.now();saveLocal();push();}
+
+    function pull(quiet){
+      if(!cloudOn()||editing)return;
+      cloudGet(SB.file).then(d=>{
+        if(!d||!Array.isArray(d.groups)||(d.build||0)<BUILD){
+          // kho chung chua co ban moi -> lay trang thai tick tu file cu roi day len
+          cloudGet(SB.oldFile).then(old=>{
+            if(old&&old.items)applyBought(old.items);
+            at=Date.now();saveLocal();render();push();
+          });
+          return;
+        }
+        if((d.at||0)>at){
+          groups=d.groups;at=d.at||0;saveLocal();render();
+          if(!quiet)setSt('\u0110\u00e3 nh\u1eadn th\u1ef1c \u0111\u01a1n m\u1edbi nh\u1ea5t c\u1ee7a bang h\u1ed9i \u2713','ok');
+        }else if(!quiet){
+          setSt('Th\u1ef1c \u0111\u01a1n d\u00f9ng chung \u00b7 ai s\u1eeda th\u00ec c\u1ea3 bang \u0111\u1ec1u th\u1ea5y','ok');
+        }
+      });
+    }
+
+    function rich(el,text){
+      String(text||'').split('**').forEach((seg,k)=>{
+        if(!seg)return;
+        if(k%2){const b=document.createElement('b');b.textContent=seg;el.appendChild(b);}
+        else el.appendChild(document.createTextNode(seg));
+      });
+    }
+    function inp(cls,val,ph){
+      const el=document.createElement('input');el.type='text';el.className=cls;
+      el.value=val||'';el.placeholder=ph||'';return el;
+    }
+    function newId(){
+      let n=1,ids={};
+      groups.forEach(g=>g.items.forEach(it=>{ids[it.id]=1;}));
+      while(ids['mon'+n])n++;
+      return 'mon'+n;
+    }
+
+    function paintProgress(){
+      const all=[];
+      groups.forEach(g=>g.items.forEach(it=>{if(it.buy)all.push(it);}));
+      const done=all.filter(it=>it.bought).length;
+      if(cnt)cnt.textContent='\u0110\u00e3 mua '+done+'/'+all.length+' ph\u1ea7n';
+      if(prog)prog.style.width=all.length?Math.round(done/all.length*100)+'%':'0%';
+    }
+
+    function dishView(it,no){
+      const el=document.createElement(it.buy?'label':'div');
+      el.className='dish'+(it.buy?' buy':'');
+      if(it.buy){
+        const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!it.bought;
+        cb.addEventListener('change',()=>{it.bought=cb.checked;touch();paintProgress();});
+        el.appendChild(cb);
+        const tk=document.createElement('span');tk.className='tick';tk.textContent='\u2713';el.appendChild(tk);
+      }
+      const n=document.createElement('span');n.className='no';n.textContent=no;el.appendChild(n);
+      const body=document.createElement('div');body.className='body';
+      const nm=document.createElement('div');nm.className='nm';nm.textContent=it.nm||'';
+      if(it.buy){
+        const dn=document.createElement('span');dn.className='done';dn.textContent='\u0111\u00e3 mua';nm.appendChild(dn);
+      }
+      const dt=document.createElement('div');dt.className='dt';rich(dt,it.dt);
+      body.appendChild(nm);body.appendChild(dt);el.appendChild(body);
+      if(it.tag){
+        const tg=document.createElement('span');tg.className='tag'+(it.tagKind?' '+it.tagKind:'');tg.textContent=it.tag;
+        el.appendChild(tg);
+      }
+      return el;
+    }
+
+    function dishEdit(g,it,gi,ii){
+      const el=document.createElement('div');el.className='dish edit';
+      const box=document.createElement('div');box.className='dish-edit';
+      const nm=inp('nm',it.nm,'T\u00ean m\u00f3n');
+      nm.addEventListener('input',()=>{it.nm=nm.value;touch();});
+      const dt=inp('dt',it.dt,'Chi ti\u1ebft \u2014 d\u00f9ng **ch\u1eef** \u0111\u1ec3 in \u0111\u1eadm');
+      dt.addEventListener('input',()=>{it.dt=dt.value;touch();});
+      const wl=document.createElement('span');wl.className='who-lbl';wl.textContent='Ai lo';
+      const tg=inp('tg',it.tag,'Si\u00eau / \u0110\u1eb7t \u0111\u1ea3o\u2026');
+      tg.addEventListener('input',()=>{it.tag=tg.value;touch();});
+      const bl=document.createElement('label');bl.className='buy-lbl';
+      const bc=document.createElement('input');bc.type='checkbox';bc.checked=!!it.buy;
+      bc.addEventListener('change',()=>{it.buy=bc.checked;if(!it.buy)it.bought=false;touch();render();});
+      bl.appendChild(bc);bl.appendChild(document.createTextNode('m\u00f3n anh em x\u00e1ch \u2014 c\u00f3 \u00f4 tick'));
+      const del=document.createElement('button');del.type='button';del.className='del';del.textContent='\u2715';
+      del.title='Xo\u00e1 m\u00f3n';
+      del.addEventListener('click',()=>{
+        if(!confirm('Xo\u00e1 m\u00f3n \u201c'+(it.nm||'n\u00e0y')+'\u201d kh\u1ecfi th\u1ef1c \u0111\u01a1n?'))return;
+        g.items.splice(ii,1);touch();render();
+      });
+      box.appendChild(nm);box.appendChild(dt);box.appendChild(wl);box.appendChild(tg);box.appendChild(bl);box.appendChild(del);
+      el.appendChild(box);
+      return el;
+    }
+
+    function render(){
+      grid.innerHTML='';
+      let no=0;
+      groups.forEach((g,gi)=>{
+        const blk=document.createElement('div');
+        blk.className='block'+(g.red?' red':'')+(g.span2?' span2':'');
+        const h=document.createElement('h3');
+        const gh=document.createElement('span');gh.className='g';gh.textContent=g.han||'';
+        h.appendChild(gh);
+        if(editing){
+          const ti=inp('nm',g.title,'T\u00ean nh\u00f3m');
+          ti.style.flex='1';ti.style.marginLeft='2px';
+          ti.addEventListener('input',()=>{g.title=ti.value;touch();});
+          h.appendChild(ti);
+        }else h.appendChild(document.createTextNode(g.title||''));
+        blk.appendChild(h);
+
+        g.items.forEach((it,ii)=>{
+          no++;
+          blk.appendChild(editing?dishEdit(g,it,gi,ii):dishView(it,HAN[no-1]||String(no)));
+        });
+
+        if(editing){
+          const add=document.createElement('button');
+          add.type='button';add.className='dish-add';add.textContent='\uff0b Th\u00eam m\u00f3n';
+          add.addEventListener('click',()=>{
+            g.items.push({id:newId(),nm:'M\u00f3n m\u1edbi',dt:'',tag:'',tagKind:'',buy:true,bought:false});
+            touch();render();
+            // render() thay ca khoi -> phai lay lai node moi theo chi so nhom
+            const blkNew=grid.children[gi];
+            const ins=blkNew?blkNew.querySelectorAll('.dish.edit input.nm'):[];
+            const last=ins[ins.length-1];
+            if(last){last.focus();last.select();}
+          });
+          blk.appendChild(add);
+        }
+        grid.appendChild(blk);
+      });
+      paintProgress();
+    }
+
+    const btnEdit=document.getElementById('menuEdit');
+    const btnReset=document.getElementById('menuReset');
+    btnEdit.addEventListener('click',()=>{
+      editing=!editing;
+      btnEdit.textContent=editing?'\u2713 Xong':'\u270e S\u1eeda th\u1ef1c \u0111\u01a1n';
+      btnEdit.classList.toggle('on',editing);
+      btnReset.hidden=!editing;
+      render();
+      if(editing)setSt('\u0110ang \u1edf ch\u1ebf \u0111\u1ed9 s\u1eeda \u2014 th\u00eam / \u0111\u1ed5i / xo\u00e1 m\u00f3n tho\u1ea3i m\u00e1i','');
+      else pull(false);
+    });
+    btnReset.addEventListener('click',()=>{
+      if(!confirm('Kh\u00f4i ph\u1ee5c th\u1ef1c \u0111\u01a1n g\u1ed1c? M\u1ecdi ch\u1ec9nh s\u1eeda c\u1ee7a c\u1ea3 bang s\u1ebd b\u1ecb ghi \u0111\u00e8.'))return;
+      groups=clone(DEFAULT).groups;touch();render();
+    });
+
+    render();
+
     if(cloudOn()){
       pull(false);
       setInterval(()=>pull(true),20000);
       document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull(true);});
     }else{
-      setSt('Chỉ lưu trên máy này','');
+      setSt('Ch\u1ec9 l\u01b0u tr\u00ean m\u00e1y n\u00e0y','');
     }
   })();
 
