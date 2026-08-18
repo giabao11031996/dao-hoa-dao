@@ -415,8 +415,8 @@
     <p class="sub">Trận hạ sơn cuối cùng của đời độc thân. Đưa Mã Siêu ra đảo nâng chén luận anh hùng, quẩy một phen chấn động giang hồ, rồi hoàn trả cho tân nương — nguyên vẹn.</p>
     <div class="meta-strip">
       <span class="chip">📍 <b>Đào Hoa Đảo</b> · Hồ Trị An</span>
-      <span class="chip">🗓 Khởi hành: <b>22/08 · 7:00</b></span>
-      <span class="chip">☕ Tập kết: <b><a href="https://share.google/EEWEeoZ6OBq0fXdoc" target="_blank" rel="noopener">Cafe Milano</a></b></span>
+      <span class="chip">🗓 Khởi hành: <b>22/08 · 8:00</b></span>
+      <span class="chip">🍲 Tập trung: <b>Lẩu Bò Thành Giao</b></span>
       <span class="chip">🎯 Chủ soái: <b>Mã Siêu</b></span>
     </div>
     <div class="countdown" id="countdown" aria-live="polite">
@@ -473,12 +473,14 @@
 
   <div class="day-title">
     <span class="scroll">卷一</span>
-    <span class="lbl">Ra đảo &amp; khai tiệc<span>Xuất phát → hoàng hôn → lửa trại</span></span>
+    <span class="lbl">Ra đảo &amp; khai tiệc<span>Lẩu bò → cafe → ra đảo → hoàng hôn → lửa trại</span></span>
   </div>
   <div class="tl">
-    <div class="stop hot reveal"><div class="time">7:00 · điểm tập kết</div><h4>Tập kết tại <a href="https://share.google/EEWEeoZ6OBq0fXdoc" target="_blank" rel="noopener">Cafe Milano</a></h4><p>Điểm hẹn khởi hành — cà phê một ly cho tỉnh, điểm danh anh em, chia xe, đổ xăng rồi lên đường. <b>Ai trễ phạt một chầu.</b></p></div>
-    <div class="stop reveal"><div class="time">8:30</div><h4>Tới bến Trị An (Mã Đà)</h4><p>Gửi xe, tập kết đồ đạc, xuống bến chờ cano.</p></div>
-    <div class="stop reveal"><div class="time">9:00</div><h4>Cano ra Đào Hoa Đảo</h4><p>Lên đảo, nhận lều/glamping, dựng trại, cắm cờ bang hội.</p></div>
+    <div class="stop hot reveal"><div class="time">8:00 · điểm tập kết</div><h4>Tập trung tại Lẩu Bò Thành Giao (Bình Dương)</h4><p>Điểm hẹn cả bang — ăn sáng cho chắc bụng, điểm danh anh em, chia xe, đổ xăng. <b>Ai trễ phạt một chầu.</b></p></div>
+    <div class="stop reveal"><div class="time">8:30</div><h4>Đi cafe · <a href="https://share.google/EEWEeoZ6OBq0fXdoc" target="_blank" rel="noopener">Cafe Milano</a></h4><p>Kéo nhau ra cafe, cà phê một ly cho tỉnh rồi lên đường.</p></div>
+    <div class="stop reveal"><div class="time">9:00</div><h4>Di chuyển xuống đảo</h4><p>Xuất phát từ Bình Dương, chạy về hướng hồ Trị An. Đi thành đoàn, không ai tách lẻ.</p></div>
+    <div class="stop reveal"><div class="time">10:15</div><h4>Tới bến Trị An (Mã Đà)</h4><p>Gửi xe, tập kết đồ đạc, xuống bến chờ cano.</p></div>
+    <div class="stop reveal"><div class="time">10:45</div><h4>Cano ra Đào Hoa Đảo</h4><p>Lên đảo, nhận lều/glamping, dựng trại, cắm cờ bang hội.</p></div>
     <div class="stop reveal"><div class="time">12:00</div><h4>Ăn trưa trên đảo</h4><p>Nạp năng lượng, họp bàn kịch bản quẩy buổi tối.</p></div>
     <div class="stop reveal"><div class="time">14:00</div><h4>Chèo SUP &amp; tắm hồ</h4><p>Team ae quẩy nước, đua SUP, chụp bộ ảnh “băng đảng”.</p></div>
     <div class="stop hot reveal"><div class="time">17:00 · giờ vàng</div><h4>Săn hoàng hôn</h4><p>Bộ ảnh “đời trai cuối cùng” của Siêu trên nền hồ đỏ rực.</p></div>
@@ -860,7 +862,7 @@
     }));
   })();
 
-  // Đếm ngược tới giờ tập kết 22/08 (7:00 sáng, giờ VN) tại Cafe Milano
+  // Đếm ngược tới giờ tập trung 22/08 (8:00 sáng, giờ VN) tại Lẩu Bò Thành Giao
   (function(){
     const D=document.getElementById('cdD'),H=document.getElementById('cdH'),
           M=document.getElementById('cdM'),S=document.getElementById('cdS'),
@@ -870,8 +872,8 @@
     function target(){
       const now=new Date();
       let y=now.getFullYear();
-      let t=new Date(y,7,22,7,0,0);             // thang 7 = thang 8
-      if(now-t>36*3600*1000)t=new Date(y+1,7,22,7,0,0);
+      let t=new Date(y,7,22,8,0,0);             // thang 7 = thang 8
+      if(now-t>36*3600*1000)t=new Date(y+1,7,22,8,0,0);
       return t;
     }
     const T=target();
@@ -895,7 +897,7 @@
       NOTE.className='cd-note'+(d<=7?' hot':'');
     }
     tick();setInterval(tick,1000);
-    BOX.setAttribute('title','Tập kết 22/08 lúc 7:00 sáng tại Cafe Milano');
+    BOX.setAttribute('title','Tập trung 22/08 lúc 8:00 sáng tại Lẩu Bò Thành Giao');
   })();
 
   // Cánh đào rơi
