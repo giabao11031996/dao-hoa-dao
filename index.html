@@ -607,7 +607,7 @@
     <div class="fund-stats">
       <div class="fstat"><b id="chiTotal">0đ</b><span>Tổng đã chi</span></div>
       <div class="fstat"><b id="chiNum">0</b><span>Số khoản chi</span></div>
-      <div class="fstat"><b id="chiHead">0đ</b><span>Bình quân / 9 người</span></div>
+      <div class="fstat"><b id="chiHead">0đ</b><span>Bình quân / <span id="chiHeadN">7</span> người</span></div>
     </div>
     <div class="fund-bar">
       <span class="st" id="chiSt">Ai cũng ghi được — gõ xong là cả bang cùng thấy</span>
@@ -636,7 +636,7 @@
       <span class="st" id="fundSt">Gõ số tiền là cả bang cùng thấy</span>
     </div>
     <div class="warn" style="margin-top:16px">
-      <b>Chưởng quỹ:</b> tên huynh đệ lấy từ tab <b>Bang hội</b> — đổi tên bên đó thì bảng này đổi theo. Gõ số tiền không cần dấu chấm, hệ thống tự chia hàng nghìn.
+      <b>Chưởng quỹ:</b> tên huynh đệ lấy từ tab <b>Bang hội</b> — đổi tên bên đó thì bảng này đổi theo. Gõ số tiền không cần dấu chấm, hệ thống tự chia hàng nghìn. <b>Chuyến này chỉ 7 huynh đệ đi</b> nên tiền chia đầu người tính trên 7.
     </div>
   </div>
 </section>
@@ -698,6 +698,9 @@
 
 
 <script>
+  // So huynh de thuc su di chuyen di: dung lam mau so chia tien
+  const SO_NGUOI_DI=7;
+
   // Ten 9 huynh de lay tu tab Bang hoi (dung chung cho bang tien chi + so quy)
   function bangHoiNames(){
     let m=null;
@@ -1186,7 +1189,8 @@
       const t=total();
       el.total.textContent=money(t);
       el.num.textContent=items.length;
-      el.head.textContent=money(t/9);
+      el.head.textContent=money(t/SO_NGUOI_DI);
+      const hn=document.getElementById('chiHeadN');if(hn)hn.textContent=SO_NGUOI_DI;
       // bao cho tab "Dong gop" biet de tinh quy con lai
       window.__CHI_TOTAL__=t;
       document.dispatchEvent(new CustomEvent('chi:changed',{detail:t}));
@@ -1322,7 +1326,7 @@
       el.total.textContent=money(total);
       el.spent.textContent=money(spent());
       el.left.textContent=money(total-spent());
-      el.count.textContent=n?('Đã có '+n+'/9 huynh đệ đóng'):'Chưa ai đóng';
+      el.count.textContent=n?('Đã có '+n+'/'+SO_NGUOI_DI+' huynh đệ đóng'):'Chưa ai đóng';
       rows.forEach((r,i)=>r.classList.toggle('paid-in',(+state[i]||0)>0));
     }
     function render(){
